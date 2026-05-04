@@ -21,11 +21,10 @@ st.title("RAGNova")
 st.caption("AI Document Intelligence Platform")
 
 # ── API Key Setup ───────────────────────────────────────────
-GROQ_API_KEY = os.getenv("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY", "")
-
-if not GROQ_API_KEY:
-    st.error("Please add GROQ_API_KEY in Streamlit secrets.")
-    st.stop()
+try:
+    GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+except:
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 
 # ── Session State ───────────────────────────────────────────
 if "vectorstore" not in st.session_state:

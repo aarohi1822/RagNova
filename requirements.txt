@@ -1,9 +1,9 @@
 streamlit
 langchain
-langchain-openai
 langchain-community
-openai
+langchain-groq
+groq
 faiss-cpu
 pypdf
 docx2txt
-tiktoken
+sentence-transformers

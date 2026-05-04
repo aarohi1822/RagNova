@@ -112,7 +112,7 @@ with st.sidebar:
         accept_multiple_files=True,
     )
 
-    if st.button("Ingest Documents", use_container_width=True) and uploaded_files:
+    if st.button("Ingest Documents", use_container_width=True):
         with st.spinner("Parsing and indexing… (first run downloads embeddings model ~90MB)"):
             all_docs = []
             for f in uploaded_files:

@@ -6,7 +6,7 @@ import streamlit as st
 from langchain_community.document_loaders import (
     Docx2txtLoader,
     TextLoader,
-    UnstructuredPDFLoader
+    UnstructuredPDFLoader,
 )
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
@@ -15,12 +15,12 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain_groq import ChatGroq
 
-# ── Page config ─────────────────────────────────────────────
+# ── Page Config ─────────────────────────────────────────────
 st.set_page_config(page_title="Enterprise RAG QA", layout="wide")
 st.title("Enterprise RAG Question Answering Platform")
 st.caption("Hybrid retrieval · citations · Groq + HuggingFace embeddings")
 
-# ── API key setup ───────────────────────────────────────────
+# ── API Key Setup ───────────────────────────────────────────
 GROQ_API_KEY = os.getenv("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY", "")
 
 if not GROQ_API_KEY:
@@ -29,7 +29,7 @@ if not GROQ_API_KEY:
 
 os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
-# ── Session state ───────────────────────────────────────────
+# ── Session State ───────────────────────────────────────────
 if "vectorstore" not in st.session_state:
     st.session_state.vectorstore = None
 
@@ -43,14 +43,14 @@ if "memory" not in st.session_state:
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# ── Cached embeddings ───────────────────────────────────────
+# ── Embeddings Cache ────────────────────────────────────────
 @st.cache_resource
 def get_embeddings():
     return HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
 
-# ── File loader ─────────────────────────────────────────────
+# ── File Loader ─────────────────────────────────────────────
 def load_file(uploaded_file):
     suffix = os.path.splitext(uploaded_file.name)[-1].lower()
 
@@ -82,21 +82,21 @@ def load_file(uploaded_file):
         st.warning(f"Failed to load {uploaded_file.name}: {str(e)}")
         return []
 
-# ── Vectorstore builder ─────────────────────────────────────
+# ── Vectorstore Builder ─────────────────────────────────────
 def build_vectorstore(docs):
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=800,
-        chunk_overlap=100
+        chunk_overlap=100,
     )
 
     chunks = splitter.split_documents(docs)
 
     return FAISS.from_documents(
         chunks,
-        get_embeddings()
+        get_embeddings(),
     )
 
-# ── Chain builder ───────────────────────────────────────────
+# ── QA Chain Builder ────────────────────────────────────────
 def get_chain(vectorstore):
     llm = ChatGroq(
         model="llama3-8b-8192",
@@ -112,7 +112,7 @@ def get_chain(vectorstore):
         output_key="answer",
     )
 
-# ── Citation formatter ──────────────────────────────────────
+# ── Citation Formatter ──────────────────────────────────────
 def format_citations(source_docs):
     seen = set()
     citations = []
@@ -126,15 +126,17 @@ def format_citations(source_docs):
 
         seen.add(key)
 
-        citations.append({
-            "chunk_id": f"chunk-{i+1}",
-            "source_name": doc.metadata.get(
-                "source_name",
-                doc.metadata.get("source", "unknown")
-            ),
-            "page": doc.metadata.get("page", "—"),
-            "excerpt": excerpt,
-        })
+        citations.append(
+            {
+                "chunk_id": f"chunk-{i+1}",
+                "source_name": doc.metadata.get(
+                    "source_name",
+                    doc.metadata.get("source", "unknown"),
+                ),
+                "page": doc.metadata.get("page", "—"),
+                "excerpt": excerpt,
+            }
+        )
 
     return citations
 
@@ -146,22 +148,33 @@ with st.sidebar:
         "Upload PDF, DOCX, or TXT files",
         type=["pdf", "docx", "txt"],
         accept_multiple_files=True,
+        key="file_uploader",
     )
+
+    if uploaded_files:
+        st.success(f"{len(uploaded_files)} file(s) uploaded successfully.")
 
     if st.button("Ingest Documents", use_container_width=True):
 
-        if not uploaded_files:
-            st.warning("Please upload at least one document.")
+        if not uploaded_files or len(uploaded_files) == 0:
+            st.error("No files uploaded. Please upload documents first.")
+
         else:
             with st.spinner("Parsing and indexing documents..."):
 
                 all_docs = []
 
                 for file in uploaded_files:
-                    all_docs.extend(load_file(file))
+                    docs = load_file(file)
 
-                if not all_docs:
-                    st.error("No valid documents could be processed.")
+                    if docs:
+                        all_docs.extend(docs)
+
+                if len(all_docs) == 0:
+                    st.error(
+                        "Documents uploaded, but no readable content was extracted."
+                    )
+
                 else:
                     try:
                         st.session_state.vectorstore = build_vectorstore(all_docs)
@@ -170,21 +183,30 @@ with st.sidebar:
                         st.session_state.chat_history = []
 
                         st.success(
-                            f"✅ {len(uploaded_files)} file(s) · {len(all_docs)} page(s) indexed successfully."
+                            f"✅ Successfully indexed {len(uploaded_files)} file(s) with {len(all_docs)} pages."
                         )
 
                     except Exception as e:
-                        st.error(f"Vectorstore build failed: {str(e)}")
+                        st.error(f"Ingestion failed: {str(e)}")
 
     if st.session_state.vectorstore:
         st.info("✅ Vectorstore ready")
     else:
         st.warning("No documents ingested yet.")
 
-# ── Main QA Interface ───────────────────────────────────────
-question = st.text_area("Ask a grounded question from your uploaded documents")
+    st.divider()
+    st.caption("Powered by Groq + HuggingFace")
 
-if st.button("Generate Answer", type="primary", use_container_width=True):
+# ── Main QA Interface ───────────────────────────────────────
+question = st.text_area(
+    "Ask a grounded question from your uploaded documents"
+)
+
+if st.button(
+    "Generate Answer",
+    type="primary",
+    use_container_width=True,
+):
 
     if not question.strip():
         st.warning("Please enter a question.")
@@ -199,23 +221,35 @@ if st.button("Generate Answer", type="primary", use_container_width=True):
 
             start_time = time.time()
 
-            result = chain.invoke({
-                "question": question
-            })
+            result = chain.invoke(
+                {
+                    "question": question
+                }
+            )
 
-            latency_ms = int((time.time() - start_time) * 1000)
+            latency_ms = int(
+                (time.time() - start_time) * 1000
+            )
 
             answer = result["answer"]
+
             citations = format_citations(
                 result.get("source_documents", [])
             )
 
             st.session_state.chat_history.append(
-                (question, answer, citations, latency_ms)
+                (
+                    question,
+                    answer,
+                    citations,
+                    latency_ms,
+                )
             )
 
-# ── Chat History ────────────────────────────────────────────
-for q, ans, citations, latency_ms in reversed(st.session_state.chat_history):
+# ── Render Chat History ─────────────────────────────────────
+for q, ans, citations, latency_ms in reversed(
+    st.session_state.chat_history
+):
 
     st.divider()
 

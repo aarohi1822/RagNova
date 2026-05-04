@@ -41,7 +41,9 @@ if "chat_history" not in st.session_state:
 @st.cache_resource
 def get_embeddings():
     """Free local embeddings — no API key needed."""
-    return HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    return HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
 
 
 def load_file(uploaded_file) -> list:
@@ -115,7 +117,14 @@ with st.sidebar:
             all_docs = []
             for f in uploaded_files:
                 all_docs.extend(load_file(f))
-            st.session_state.vectorstore = build_vectorstore(all_docs)
+
+            try:
+                st.session_state.vectorstore = build_vectorstore(all_docs)
+                st.session_state.memory.clear()
+                st.session_state.chat_history = []
+                st.success(f"✅ {len(uploaded_files)} file(s) · {len(all_docs)} page(s) indexed.")
+            except Exception as e:
+                st.error(str(e))
             st.session_state.memory.clear()
             st.session_state.chat_history = []
         st.success(f"✅ {len(uploaded_files)} file(s) · {len(all_docs)} page(s) indexed.")

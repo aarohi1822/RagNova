@@ -27,8 +27,6 @@ if not GROQ_API_KEY:
     st.error("Please add GROQ_API_KEY in Streamlit secrets.")
     st.stop()
 
-os.environ["GROQ_API_KEY"] = GROQ_API_KEY
-
 # ── Session State ───────────────────────────────────────────
 if "vectorstore" not in st.session_state:
     st.session_state.vectorstore = None
@@ -100,14 +98,16 @@ def build_vectorstore(docs):
 # ── QA Chain Builder ────────────────────────────────────────
 def get_chain(vectorstore):
     llm = ChatGroq(
-        model="llama3-8b-8192",
+        model_name="llama3-8b-8192",
         temperature=0,
-        groq_api_key=GROQ_API_KEY,
+        api_key=GROQ_API_KEY,
     )
 
     return ConversationalRetrievalChain.from_llm(
         llm=llm,
-        retriever=vectorstore.as_retriever(search_kwargs={"k": 5}),
+        retriever=vectorstore.as_retriever(
+            search_kwargs={"k": 5}
+        ),
         memory=st.session_state.memory,
         return_source_documents=True,
         output_key="answer",

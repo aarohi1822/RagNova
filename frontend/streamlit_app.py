@@ -51,7 +51,8 @@ def load_file(uploaded_file) -> list:
         tmp_path = tmp.name
 
     if suffix == ".pdf":
-        loader = PyPDFLoader(tmp_path)
+       from langchain_community.document_loaders import UnstructuredPDFLoader
+loader = UnstructuredPDFLoader(tmp_path)
     elif suffix == ".docx":
         loader = Docx2txtLoader(tmp_path)
     else:

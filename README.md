@@ -1,334 +1,171 @@
-# 🚀 RAGNova: Enterprise-Grade Retrieval-Augmented Generation Platform
+# Enterprise RAG QA Platform
 
-![RAGNova Banner](assets/banner.png)
+Production-grade, resume-premium Retrieval-Augmented Generation (RAG) system for multi-document question answering with hybrid retrieval, reranking, citations, validation, and deployment-ready engineering.
 
-> **Next-generation GenAI system engineered for intelligent document understanding, hybrid retrieval, and citation-backed enterprise question answering.**
+## Why This Project Stands Out
 
-RAGNova is not a basic chatbot.
-It is a **production-grade LLM engineering system** purpose-built to showcase advanced AI architecture, scalable retrieval systems, deployment readiness, and enterprise-level product thinking.
+Most student RAG projects stop at "upload PDF + chatbot". This repository is designed to signal **LLM engineering maturity**, **retrieval quality optimization**, **evaluation thinking**, and **product readiness**:
 
-Designed for:
+- Hybrid retrieval: semantic vector search + BM25 keyword search
+- Re-ranking layer for higher precision evidence selection
+- Multi-document ingestion across PDF, DOCX, and TXT
+- Citation-first grounded generation
+- Conversation memory and query rewriting
+- Validation layer for hallucination reduction
+- Evaluation metrics: Recall@K, MRR, faithfulness, answer relevance
+- FastAPI backend + Streamlit admin and demo frontend
+- Dockerized and ready for cloud deployment
+- Clean modular architecture that can scale to Pinecone, Graph RAG, auth, and observability
 
-* AI/ML engineering portfolios
-* Generative AI careers
-* Data Science leadership
-* Recruiter impact
-* MS/Research applications
+## Tech Stack
 
----
+- Python 3.11
+- FastAPI
+- Streamlit
+- ChromaDB
+- Sentence Transformers
+- BM25
+- OpenAI-compatible LLM interface
+- Docker
+- GitHub Actions
 
-# 🌟 Why RAGNova Stands Out
+## Architecture
 
-### In a market flooded with simple chatbot clones, RAGNova demonstrates:
-
-✅ Advanced Retrieval-Augmented Generation (RAG) architecture
-✅ Hybrid semantic + keyword search
-✅ Intelligent reranking for retrieval precision
-✅ Hallucination reduction and validation
-✅ Citation-backed trustworthy answers
-✅ Production deployment with FastAPI + Streamlit
-✅ Docker + CI/CD integration
-✅ Enterprise scalability mindset
-
----
-
-# 🧠 Executive Abstract
-
-RAGNova is an enterprise-scale Retrieval-Augmented Generation system built to solve one of modern AI's biggest challenges: trustworthy, domain-specific, explainable question answering over private knowledge bases.
-
-By integrating document ingestion, vector search, reranking, LLM response generation, memory, and validation layers, RAGNova transforms raw document repositories into intelligent AI knowledge systems.
-
-This project reflects 2026-level industry demand for:
-
-* LLM engineers
-* GenAI developers
-* AI product architects
-* Applied NLP specialists
-
----
-
-# 🏗️ System Architecture
-
-```bash
-User Query
-   ↓
-Frontend Interface (Streamlit)
-   ↓
-FastAPI Backend
-   ↓
-Session Memory + Query Processing
-   ↓
-Hybrid Retrieval Layer
-   ├── Semantic Vector Search
-   ├── Keyword Retrieval
-   └── Reranking Engine
-   ↓
-LLM Generation Engine
-   ↓
-Validation + Citation Attribution
-   ↓
-Final Enterprise Response
+```mermaid
+flowchart LR
+    U["User Query"] --> R["Query Rewriter + Session Memory"]
+    R --> H["Hybrid Retriever"]
+    H --> S["Semantic Search"]
+    H --> K["Keyword Search"]
+    S --> V["Vector Store"]
+    K --> B["BM25 Index"]
+    H --> X["Re-ranker"]
+    X --> G["LLM Generator"]
+    G --> Y["Validation + Citations"]
+    A["Admin Upload"] --> P["Parsing + Chunking + Embeddings"]
+    P --> V
+    P --> B
 ```
 
-![Architecture Diagram](assets/architecture.png)
+## Project Structure
 
----
-
-# 🔥 Premium Features
-
-## 📄 Intelligent Document Processing
-
-* PDF ingestion
-* DOCX ingestion
-* TXT ingestion
-* Chunking optimization
-* Metadata indexing
-* Scalable preprocessing pipelines
-
-## 🔍 Advanced Retrieval Engine
-
-* FAISS / ChromaDB vector search
-* Semantic embeddings
-* Keyword retrieval
-* Hybrid ranking
-* Reranking optimization
-* Multi-document contextual retrieval
-
-## 🤖 LLM Intelligence Layer
-
-* Context-aware generation
-* Citation-backed answers
-* Session memory
-* Hallucination reduction
-* Response validation
-* Domain specialization
-
-## 🖥️ Product & Deployment Layer
-
-* FastAPI backend
-* Streamlit frontend
-* Docker containerization
-* GitHub Actions CI/CD
-* Enterprise deployment readiness
-
----
-
-# 📊 Industry Relevance
-
-RAGNova directly aligns with top 2026 AI hiring priorities:
-
-| Skill Area            | Industry Demand |
-| --------------------- | --------------- |
-| LLM Engineering       | Extremely High  |
-| RAG Systems           | Extremely High  |
-| Vector Databases      | High            |
-| Deployment & MLOps    | High            |
-| Applied NLP           | High            |
-| Enterprise AI Systems | Very High       |
-
----
-
-# 🖼️ Visual Showcase
-
-## Main Dashboard
-
-![Dashboard](assets/dashboard.png)
-
-## Retrieval Flow
-
-![Retrieval Pipeline](assets/retrieval.png)
-
-## Admin Upload System
-
-![Admin Panel](assets/admin_panel.png)
-
----
-
-# ⚙️ Technical Stack
-
-## Core AI Stack
-
-* Python
-* LangChain / LlamaIndex
-* HuggingFace Transformers
-* SentenceTransformers
-* OpenAI / Gemini / Llama APIs
-
-## Retrieval Infrastructure
-
-* FAISS
-* ChromaDB
-* Hybrid Retrieval Systems
-* Semantic Embeddings
-* Reranking Models
-
-## Backend Engineering
-
-* FastAPI
-* Pydantic
-* Async APIs
-
-## Frontend
-
-* Streamlit
-
-## DevOps
-
-* Docker
-* CI/CD
-* GitHub Actions
-* Deployment Pipelines
-
----
-
-# 📂 Enterprise Project Structure
-
-```bash
-RAGNova/
-│
+```text
+.
 ├── backend/
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── api/
-│   │   ├── services/
-│   │   └── core/
-│
+│   └── app/
+│       ├── api/routes/
+│       ├── core/
+│       ├── llm/
+│       ├── memory/
+│       ├── models/
+│       ├── retrieval/
+│       ├── schemas/
+│       ├── services/
+│       └── storage/
 ├── frontend/
-│   └── streamlit_app.py
-│
 ├── docs/
-│   ├── ARCHITECTURE.md
-│   ├── IMPLEMENTATION_GUIDE.md
-│   ├── DEPLOYMENT.md
-│   ├── RESUME_ASSETS.md
-│   └── PORTFOLIO_STRATEGY.md
-│
-├── tests/
 ├── scripts/
+├── tests/
+├── data/
 ├── Dockerfile
-├── requirements.txt
+├── docker-compose.yml
+├── pyproject.toml
 └── README.md
 ```
 
----
+## Key Features
 
-# 🚀 Installation Guide
+### Implemented in This Scaffold
+
+- PDF, DOCX, and TXT ingestion
+- Intelligent recursive chunking
+- Sentence Transformer embeddings
+- Chroma vector store
+- BM25 keyword retrieval
+- Reciprocal-rank-fusion hybrid retrieval
+- Cross-encoder reranking
+- OpenAI-compatible answer generation
+- Inline citations and source excerpts
+- Session memory
+- Query rewriting
+- Validation notes for groundedness review
+- Evaluation module and tests
+
+### Recommended Next Upgrades
+
+- JWT auth and admin RBAC
+- Redis caching
+- Postgres or managed vector DB
+- Observability with OpenTelemetry + Prometheus
+- Graph RAG with extracted entities and relations
+- Multi-tenant document collections
+- Agentic retrieval retry and self-reflection
+
+## Quick Start
 
 ```bash
-git clone https://github.com/yourusername/RAGNova.git
-cd RAGNova
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
-```
-
----
-
-# 🔐 Environment Configuration
-
-```env
-OPENAI_API_KEY=your_api_key
-VECTOR_DB_PATH=your_vector_store
-MODEL_NAME=your_model
-```
-
----
-
-# ▶️ Run The Platform
-
-## Launch API Backend
-
-```bash
+cp .env.example .env
 make run-api
-```
-
-## Launch Frontend Dashboard
-
-```bash
 make run-ui
 ```
 
----
+Open:
 
-# 📈 Premium Evaluation Metrics
+- API docs: `http://localhost:8000/docs`
+- Frontend: `http://localhost:8501`
 
-To maximize recruiter and research value:
+## What Makes It Resume-Grade
 
-* Recall@K
-* Mean Reciprocal Rank (MRR)
-* Faithfulness Score
-* Answer Relevance
-* Latency Benchmarking
-* Citation Precision
+- It shows **applied retrieval engineering**, not just chatbot assembly.
+- It includes **evaluation and benchmarking hooks**, which most student projects miss.
+- It demonstrates **system design, modular APIs, and deployment readiness**.
+- It supports a strong narrative for internships, GenAI roles, LinkedIn, GitHub, and MS applications.
 
----
+## Benchmarking Strategy
 
-# 🌍 High-Value Domain Specializations
+Build a labeled dataset of `query -> relevant chunks -> expected answer` and compare:
 
-RAGNova can be specialized into:
+1. Dense-only retrieval
+2. BM25-only retrieval
+3. Hybrid retrieval
+4. Hybrid + reranking
 
-* 🛡️ Cybersecurity Intelligence Assistant
-* 📚 Research Paper Copilot
-* ⚖️ Legal Document AI
-* 🏥 Healthcare Knowledge System
-* 🏢 Enterprise Policy Assistant
+Track:
 
----
+- Recall@K
+- MRR
+- latency per stage
+- answer relevance
+- faithfulness
 
-# 🎯 Career Portfolio Impact
+## Suggested Domain Variants
 
-RAGNova positions you as:
+- Research assistant for scientific literature
+- Healthcare policy QA assistant
+- Legal clause and contract copilot
+- Cybersecurity runbook retrieval assistant
+- University knowledge assistant
 
-### Recruiters See:
+## Documentation
 
-* Serious LLM engineer
-* Product-minded AI developer
-* Deployment-capable engineer
-* Advanced NLP practitioner
+- [Architecture](docs/ARCHITECTURE.md)
+- [Implementation Guide](docs/IMPLEMENTATION_GUIDE.md)
+- [Deployment Guide](docs/DEPLOYMENT.md)
+- [Portfolio Strategy](docs/PORTFOLIO_STRATEGY.md)
+- [Resume Assets](docs/RESUME_ASSETS.md)
+- [Screenshot Guide](docs/SCREENSHOT_GUIDE.md)
 
-### Universities See:
+## Portfolio Positioning
 
-* Research-capable student
-* Applied AI systems builder
-* Modern GenAI engineer
-* Strong MS applicant
+This project is ideal if you want your profile to communicate:
 
----
+- LLM engineering
+- applied AI architecture
+- retrieval systems thinking
+- production readiness
+- measurable GenAI quality optimization
 
-# 🔮 Future Expansion
-
-* Agentic RAG
-* Graph RAG
-* Multi-modal retrieval
-* Knowledge graph integration
-* Cloud-scale infrastructure
-* Enterprise security
-* Role-based authentication
-* Full MLOps automation
-
----
-
-# 👩‍💻 Author
-
-**Aarohi Gaurav Sharma**
-B.Tech CSE | AIML & Data Science Specialist
-GitHub: [https://github.com/aarohi1822](https://github.com/aarohi1822)
-LinkedIn: [https://www.linkedin.com/in/aarohi-gaurav-sharma-b0a200300](https://www.linkedin.com/in/aarohi-gaurav-sharma-b0a200300)
-
----
-
-# 🏆 Final Positioning
-
-## RAGNova is built to be:
-
-⭐ Resume flagship project
-⭐ GitHub authority project
-⭐ LinkedIn differentiation asset
-⭐ MS application booster
-⭐ Enterprise AI portfolio centerpiece
-
----
-
-# 📜 License
-
-MIT License
+That combination is exactly what differentiates serious AI/ML candidates from average course-project portfolios.

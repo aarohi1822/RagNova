@@ -1,6 +1,5 @@
 # RAGNova: Enterprise Retrieval-Augmented Generation System
 
-![RAGNova Banner](assets/banner.png)
 
 ## Abstract
 

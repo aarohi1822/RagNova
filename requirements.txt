@@ -1,10 +1,15 @@
+```txt id="y4c4v7"
+fastapi
+uvicorn
 streamlit
 langchain
 langchain-community
 langchain-groq
+langchain-text-splitters
 groq
 faiss-cpu
 pypdf
 docx2txt
 sentence-transformers
-langchain-text-splitters
+python-dotenv
+```

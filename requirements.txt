@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+streamlit
+langchain
+llama-index
+chromadb
+faiss-cpu
+sentence-transformers
+openai
+pydantic
+python-dotenv
+cohere
+pypdf
+python-docx
+rank-bm25
+pytest

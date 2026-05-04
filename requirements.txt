@@ -1,6 +1,9 @@
+```txt id="0tbv9x"
 streamlit
 langchain
+langchain-core
 langchain-community
+langchain-openai
 langchain-groq
 langchain-text-splitters
 groq
@@ -11,3 +14,4 @@ sentence-transformers
 python-dotenv
 transformers
 torch
+```

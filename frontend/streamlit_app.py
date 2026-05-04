@@ -6,7 +6,7 @@ import streamlit as st
 from langchain_community.document_loaders import (
     Docx2txtLoader,
     TextLoader,
-    UnstructuredPDFLoader,
+    PyPDFLoader,
 )
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
@@ -60,7 +60,7 @@ def load_file(uploaded_file):
 
     try:
         if suffix == ".pdf":
-            loader = UnstructuredPDFLoader(tmp_path)
+            loader = PyPDFLoader(tmp_path)
 
         elif suffix == ".docx":
             loader = Docx2txtLoader(tmp_path)
@@ -69,6 +69,7 @@ def load_file(uploaded_file):
             loader = TextLoader(tmp_path, encoding="utf-8")
 
         else:
+            st.warning(f"Unsupported file type: {uploaded_file.name}")
             return []
 
         docs = loader.load()

@@ -17,8 +17,8 @@ from langchain_groq import ChatGroq
 
 # ── Page Config ─────────────────────────────────────────────
 st.set_page_config(page_title="Enterprise RAG QA", layout="wide")
-st.title("Enterprise RAG Question Answering Platform")
-st.caption("Hybrid retrieval · citations · Groq + HuggingFace embeddings")
+st.title("RAGNova")
+st.caption("AI Document Intelligence Platform")
 
 # ── API Key Setup ───────────────────────────────────────────
 GROQ_API_KEY = os.getenv("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY", "")
@@ -100,7 +100,7 @@ def get_chain(vectorstore):
     llm = ChatGroq(
         model_name="llama3-8b-8192",
         temperature=0,
-        api_key=GROQ_API_KEY,
+        groq_api_key=GROQ_API_KEY,
     )
 
     return ConversationalRetrievalChain.from_llm(

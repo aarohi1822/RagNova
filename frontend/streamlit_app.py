@@ -94,7 +94,7 @@ def build_vectorstore(docs):
 # ── QA Chain Builder ────────────────────────────────────────
 def get_chain(vectorstore):
     llm = ChatGroq(
-        model_name="llama3-8b-8192",
+        model_name="llama-3.1-8b-instant",
         temperature=0,
         groq_api_key=GROQ_API_KEY,
     )

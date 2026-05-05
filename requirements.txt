@@ -14,3 +14,7 @@ python-dotenv==1.0.1
 transformers==4.44.2
 torch==2.3.1
 pdfminer.six==20221105
+rank-bm25
+sentence-transformers
+numpy
+pandas

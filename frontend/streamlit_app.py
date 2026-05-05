@@ -12,7 +12,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.chains import ConversationalRetrievalChain
-from langchain.memory import ConversationBufferMemory
+from langchain.memory import ConversationBufferWindowMemory
 from langchain_groq import ChatGroq
 
 # ── Page Config ─────────────────────────────────────────────
@@ -23,18 +23,23 @@ st.caption("AI Document Intelligence Platform")
 # ── API Key Setup ───────────────────────────────────────────
 try:
     GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
-except:
+except Exception:
     GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+
+if not GROQ_API_KEY:
+    st.error("Please add GROQ_API_KEY in Streamlit secrets.")
+    st.stop()
 
 # ── Session State ───────────────────────────────────────────
 if "vectorstore" not in st.session_state:
     st.session_state.vectorstore = None
 
 if "memory" not in st.session_state:
-    st.session_state.memory = ConversationBufferMemory(
+    st.session_state.memory = ConversationBufferWindowMemory(
         memory_key="chat_history",
         return_messages=True,
         output_key="answer",
+        k=2,
     )
 
 if "chat_history" not in st.session_state:
@@ -58,13 +63,10 @@ def load_file(uploaded_file):
     try:
         if suffix == ".pdf":
             loader = PyPDFLoader(tmp_path)
-
         elif suffix == ".docx":
             loader = Docx2txtLoader(tmp_path)
-
         elif suffix == ".txt":
             loader = TextLoader(tmp_path, encoding="utf-8")
-
         else:
             st.warning(f"Unsupported file type: {uploaded_file.name}")
             return []
@@ -86,13 +88,8 @@ def build_vectorstore(docs):
         chunk_size=800,
         chunk_overlap=100,
     )
-
     chunks = splitter.split_documents(docs)
-
-    return FAISS.from_documents(
-        chunks,
-        get_embeddings(),
-    )
+    return FAISS.from_documents(chunks, get_embeddings())
 
 # ── QA Chain Builder ────────────────────────────────────────
 def get_chain(vectorstore):
@@ -101,12 +98,9 @@ def get_chain(vectorstore):
         temperature=0,
         groq_api_key=GROQ_API_KEY,
     )
-
     return ConversationalRetrievalChain.from_llm(
         llm=llm,
-        retriever=vectorstore.as_retriever(
-            search_kwargs={"k": 5}
-        ),
+        retriever=vectorstore.as_retriever(search_kwargs={"k": 5}),
         memory=st.session_state.memory,
         return_source_documents=True,
         output_key="answer",
@@ -118,12 +112,11 @@ def format_citations(source_docs):
     citations = []
 
     for i, doc in enumerate(source_docs):
-        excerpt = doc.page_content.strip()[:400]
+        excerpt = doc.page_content.strip()[:200]
         key = excerpt[:80]
 
         if key in seen:
             continue
-
         seen.add(key)
 
         citations.append(
@@ -155,37 +148,27 @@ with st.sidebar:
         st.success(f"{len(uploaded_files)} file(s) uploaded successfully.")
 
     if st.button("Ingest Documents", use_container_width=True):
-
-        if not uploaded_files or len(uploaded_files) == 0:
+        if not uploaded_files:
             st.error("No files uploaded. Please upload documents first.")
-
         else:
             with st.spinner("Parsing and indexing documents..."):
-
                 all_docs = []
 
                 for file in uploaded_files:
                     docs = load_file(file)
-
                     if docs:
                         all_docs.extend(docs)
 
-                if len(all_docs) == 0:
-                    st.error(
-                        "Documents uploaded, but no readable content was extracted."
-                    )
-
+                if not all_docs:
+                    st.error("Documents uploaded, but no readable content was extracted.")
                 else:
                     try:
                         st.session_state.vectorstore = build_vectorstore(all_docs)
-
                         st.session_state.memory.clear()
                         st.session_state.chat_history = []
-
                         st.success(
                             f"✅ Successfully indexed {len(uploaded_files)} file(s) with {len(all_docs)} pages."
                         )
-
                     except Exception as e:
                         st.error(f"Ingestion failed: {str(e)}")
 
@@ -198,75 +181,43 @@ with st.sidebar:
     st.caption("Powered by Groq + HuggingFace")
 
 # ── Main QA Interface ───────────────────────────────────────
-question = st.text_area(
-    "Ask a grounded question from your uploaded documents"
-)
+question = st.text_area("Ask a grounded question from your uploaded documents")
 
-if st.button(
-    "Generate Answer",
-    type="primary",
-    use_container_width=True,
-):
-
+if st.button("Generate Answer", type="primary", use_container_width=True):
     if not question.strip():
         st.warning("Please enter a question.")
-
     elif st.session_state.vectorstore is None:
         st.error("Please upload and ingest at least one document first.")
-
     else:
         with st.spinner("Retrieving and generating answer..."):
+            try:
+                chain = get_chain(st.session_state.vectorstore)
+                start_time = time.time()
+                result = chain.invoke({"question": question})
+                latency_ms = int((time.time() - start_time) * 1000)
 
-            chain = get_chain(st.session_state.vectorstore)
+                answer = result["answer"]
+                citations = format_citations(result.get("source_documents", []))
 
-            start_time = time.time()
-
-            result = chain.invoke(
-                {
-                    "question": question
-                }
-            )
-
-            latency_ms = int(
-                (time.time() - start_time) * 1000
-            )
-
-            answer = result["answer"]
-
-            citations = format_citations(
-                result.get("source_documents", [])
-            )
-
-            st.session_state.chat_history.append(
-                (
-                    question,
-                    answer,
-                    citations,
-                    latency_ms,
+                st.session_state.chat_history.append(
+                    (question, answer, citations, latency_ms)
                 )
-            )
+            except Exception as e:
+                st.error(f"Generation failed: {str(e)}")
 
 # ── Render Chat History ─────────────────────────────────────
-for q, ans, citations, latency_ms in reversed(
-    st.session_state.chat_history
-):
-
+for q, ans, citations, latency_ms in reversed(st.session_state.chat_history):
     st.divider()
-
     st.markdown(f"**Q: {q}**")
-
     st.subheader("Answer")
     st.write(ans)
 
     col1, col2 = st.columns(2)
-
     col1.metric("Latency (ms)", latency_ms)
     col2.metric("Citations", len(citations))
 
     st.subheader("Retrieved Evidence")
 
     for c in citations:
-        with st.expander(
-            f'{c["source_name"]} | {c["chunk_id"]} | page {c["page"]}'
-        ):
+        with st.expander(f'{c["source_name"]} | {c["chunk_id"]} | page {c["page"]}'):
             st.write(c["excerpt"])

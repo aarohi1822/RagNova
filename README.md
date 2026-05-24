@@ -32,9 +32,9 @@ User Query
          │
     ┌────▼─────────────────────────────┐
     │         Hybrid Retrieval         │
-    │  ┌──────────────┐  ┌──────────┐ │
-    │  │ FAISS Semantic│  │ BM25 KW  │ │  ← Two retrieval signals merged
-    │  └──────────────┘  └──────────┘ │
+    │  ┌──────────────┐  ┌──────────┐  │
+    │  │FAISS Semantic│  │ BM25 KW  │  │  ← Two retrieval signals merged
+    │  └──────────────┘  └──────────┘  │
     └────────────────┬─────────────────┘
                      │
          ┌───────────▼───────────┐
@@ -139,14 +139,14 @@ RAGNova tracks every query automatically:
 ├─────────────────┬───────────────────────────────────┤
 │ LLM Inference   │ Groq · LLaMA 3.1 8B Instant       │
 │ Embeddings      │ HuggingFace · all-MiniLM-L6-v2    │
-│ Vector Store    │ FAISS (local, zero cost)           │
-│ Keyword Search  │ BM25Okapi (rank-bm25)              │
-│ Reranker        │ CrossEncoder ms-marco-MiniLM-L-6   │
-│ Frontend        │ Streamlit                          │
-│ Backend         │ FastAPI                            │
-│ Persistence     │ SQLite                             │
-│ Containerized   │ Docker + docker-compose            │
-│ CI/CD           │ GitHub Actions                     │
+│ Vector Store    │ FAISS (local, zero cost)          │
+│ Keyword Search  │ BM25Okapi (rank-bm25)             │
+│ Reranker        │ CrossEncoder ms-marco-MiniLM-L-6  │
+│ Frontend        │ Streamlit                         │
+│ Backend         │ FastAPI                           │
+│ Persistence     │ SQLite                            │
+│ Containerized   │ Docker + docker-compose           │
+│ CI/CD           │ GitHub Actions                    │
 └─────────────────┴───────────────────────────────────┘
 ```
 

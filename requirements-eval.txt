@@ -1,0 +1,11 @@
+# Offline evaluation (eval/). Install into a separate venv:
+#   python -m venv .venv && .venv/bin/pip install -r requirements-eval.txt
+torch==2.7.1
+sentence-transformers==3.3.1
+transformers==4.46.3
+faiss-cpu==1.9.0
+rank-bm25==0.2.2
+langchain-text-splitters==0.3.2
+numpy<2.3
+requests
+pytest

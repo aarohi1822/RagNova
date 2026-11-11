@@ -1,0 +1,146 @@
+[
+  {
+    "slug": "gdpr",
+    "title": "General Data Protection Regulation",
+    "revision_id": 1382134382,
+    "revision_timestamp": "2026-10-26T20:36:19Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1382134382",
+    "license": "CC BY-SA 4.0",
+    "chars": 52499
+  },
+  {
+    "slug": "ccpa",
+    "title": "California Consumer Privacy Act",
+    "revision_id": 1371997091,
+    "revision_timestamp": "2026-08-29T19:43:54Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1371997091",
+    "license": "CC BY-SA 4.0",
+    "chars": 9326
+  },
+  {
+    "slug": "hipaa",
+    "title": "Health Insurance Portability and Accountability Act",
+    "revision_id": 1381250465,
+    "revision_timestamp": "2026-10-21T00:44:57Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1381250465",
+    "license": "CC BY-SA 4.0",
+    "chars": 40389
+  },
+  {
+    "slug": "ferpa",
+    "title": "Family Educational Rights and Privacy Act",
+    "revision_id": 1384157813,
+    "revision_timestamp": "2026-11-06T22:06:37Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1384157813",
+    "license": "CC BY-SA 4.0",
+    "chars": 6148
+  },
+  {
+    "slug": "coppa",
+    "title": "Children's Online Privacy Protection Act",
+    "revision_id": 1384207300,
+    "revision_timestamp": "2026-11-07T03:52:08Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1384207300",
+    "license": "CC BY-SA 4.0",
+    "chars": 27124
+  },
+  {
+    "slug": "sox",
+    "title": "Sarbanes–Oxley Act",
+    "revision_id": 1384415354,
+    "revision_timestamp": "2026-11-08T03:26:42Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1384415354",
+    "license": "CC BY-SA 4.0",
+    "chars": 52556
+  },
+  {
+    "slug": "pci_dss",
+    "title": "Payment Card Industry Data Security Standard",
+    "revision_id": 1383242788,
+    "revision_timestamp": "2026-11-01T18:40:06Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1383242788",
+    "license": "CC BY-SA 4.0",
+    "chars": 20601
+  },
+  {
+    "slug": "iso27001",
+    "title": "ISO/IEC 27001",
+    "revision_id": 1382122543,
+    "revision_timestamp": "2026-10-26T19:09:55Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1382122543",
+    "license": "CC BY-SA 4.0",
+    "chars": 26393
+  },
+  {
+    "slug": "nist_csf",
+    "title": "NIST Cybersecurity Framework",
+    "revision_id": 1368370065,
+    "revision_timestamp": "2026-08-08T17:34:45Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1368370065",
+    "license": "CC BY-SA 4.0",
+    "chars": 20553
+  },
+  {
+    "slug": "eprivacy",
+    "title": "EPrivacy Directive",
+    "revision_id": 1363683125,
+    "revision_timestamp": "2026-07-11T17:57:41Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1363683125",
+    "license": "CC BY-SA 4.0",
+    "chars": 8253
+  },
+  {
+    "slug": "dsa",
+    "title": "Digital Services Act",
+    "revision_id": 1384597416,
+    "revision_timestamp": "2026-11-09T01:52:01Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1384597416",
+    "license": "CC BY-SA 4.0",
+    "chars": 29105
+  },
+  {
+    "slug": "ai_act",
+    "title": "Artificial Intelligence Act",
+    "revision_id": 1384080469,
+    "revision_timestamp": "2026-11-06T13:23:30Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1384080469",
+    "license": "CC BY-SA 4.0",
+    "chars": 23293
+  },
+  {
+    "slug": "dpa2018",
+    "title": "Data Protection Act 2018",
+    "revision_id": 1381942519,
+    "revision_timestamp": "2026-10-25T19:18:44Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1381942519",
+    "license": "CC BY-SA 4.0",
+    "chars": 5405
+  },
+  {
+    "slug": "pipeda",
+    "title": "Personal Information Protection and Electronic Documents Act",
+    "revision_id": 1363697237,
+    "revision_timestamp": "2026-07-11T19:48:38Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1363697237",
+    "license": "CC BY-SA 4.0",
+    "chars": 9896
+  },
+  {
+    "slug": "lgpd",
+    "title": "General Personal Data Protection Law",
+    "revision_id": 1328284711,
+    "revision_timestamp": "2025-12-18T23:36:34Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1328284711",
+    "license": "CC BY-SA 4.0",
+    "chars": 4966
+  },
+  {
+    "slug": "dodd_frank",
+    "title": "Dodd–Frank Act",
+    "revision_id": 1382247844,
+    "revision_timestamp": "2026-10-27T15:14:37Z",
+    "url": "https://en.wikipedia.org/w/index.php?oldid=1382247844",
+    "license": "CC BY-SA 4.0",
+    "chars": 35273
+  }
+]

@@ -1,0 +1,330 @@
+item_id,qid,question,context,answer,faithful,notes
+j01,q001,Which California companies does the consumer privacy law cover based on their revenue?,"[gdpr::0180] The U.S. state of California passed the California Consumer Privacy Act on 28 June 2018, taking effect on 1 January 2020; it grants rights to transparency and control over the collection of personal information by companies in a similar means to GDPR. Critics have argued that such laws need to be implemented at the federal level to be effective, as a collection of state-level laws would have
+
+---
+
+[ccpa::0000] The California Consumer Privacy Act (CCPA) is a state statute intended to enhance privacy rights and consumer protection for residents of the state of California in the United States. The bill was passed by the California State Legislature and signed into law by the Governor of California, Jerry Brown, on June 28, 2018, to amend Part 4 of Division 3 of the California Civil Code. Officially called
+
+---
+
+[ccpa::0029] The California Consumer Privacy Act of 2018 was originally proposed as a ballot proposition by a privacy group known as Californians for Consumer Privacy. The California DOJ approved the initiative's official language on December 18, 2017, allowing the group to begin collecting signatures. In June 2018, the proponents gathered enough signatures to qualify the CCPA initiative for the November 2018","Based on their annual revenue, the California Consumer Privacy Act covers businesses with more than $25 million in gross receipts annually.",,
+j02,q003,What is the maximum penalty for a deliberate breach of California's privacy statute?,"[ccpa::0016] A fine up to $7,500 for each intentional violation and $2,500 for each unintentional violation (Cal. Civ. Code § 1798.155).
+Privacy notices must be accessible and have alternative format access clearly called out.
+Liability may also apply in respect of businesses in overseas countries who ship items into California.
+
+---
+
+[ccpa::0014] Companies that become victims of data theft or other data security breaches can be ordered in civil class action lawsuits to pay statutory damages between $100 and $750 per California resident and incident, or actual damages, whichever is greater, and any other relief a court deems proper, subject to an option of the California Attorney General's Office to prosecute the company instead of
+
+---
+
+[ccpa::0000] The California Consumer Privacy Act (CCPA) is a state statute intended to enhance privacy rights and consumer protection for residents of the state of California in the United States. The bill was passed by the California State Legislature and signed into law by the Governor of California, Jerry Brown, on June 28, 2018, to amend Part 4 of Division 3 of the California Civil Code. Officially called","The maximum penalty for a deliberate breach of California's privacy statute is $7,500 for each intentional violation and $2,500 for each unintentional violation.",,
+j03,q005,Owasso Independent School District v. Falvo peer-grading Supreme Court ruling,"[ferpa::0019] In Owasso Independent School District v. Falvo, an important part of the case was determining the relationship between peer-grading and ""education records"" as defined in FERPA. The plaintiffs argued ""that allowing students to score each other's tests [...] as the teachers explain the correct answers to the entire class [...] embarrassed [...] children"", but they lost in a summary judgment by the
+
+---
+
+[ferpa::0020] but they lost in a summary judgment by the district court. The Court of Appeals, ruled that students placing grades on the work of other students made such work into an ""education record."" Thus, peer-grading was determined as a violation of FERPA privacy policies because students had access to other students' academic performance without full consent. However, on appeal to the Supreme Court, it
+
+---
+
+[ferpa::0021] However, on appeal to the Supreme Court, it was unanimously ruled that peer-grading was not a violation of FERPA. This is because a grade written on a student's work does not become an ""education record"" until the teacher writes the final grade into a grade book.","The Supreme Court ruled that peer-grading was not a violation of FERPA (Family Educational Rights and Privacy Act) when a grade written on a student's work did not become an ""education record"" until the teacher wrote the final grade into a grade book.",,
+j04,q007,Do cookies that remember what is in an online shopping basket require user consent under the EU directive?,"[eprivacy::0030] EU cookie consent banners are pop-ups or notifications on websites asking whether users will accept browser cookies. The ePrivacy Directive requires websites to get explicit consent from users before storing cookies on their devices. Despite their intended privacy benefits, cookie consent banners are widely regarded as a nuisance. Users are constantly bombarded with these banners on almost every
+
+---
+
+[eprivacy::0027] so that a user can give their informed consent and indicating to a target website that consent has been obtained. Initial consent can be carried over into repeated content requests to a website. The Directive does not give any guidelines as to what may constitute an opt-out, but requires that cookies, other than those ""strictly necessary for the delivery of a service requested by the user"" are
+
+---
+
+[eprivacy::0023] all types of cookies; those that are deemed to be ""strictly necessary for the delivery of a service requested by the user"", such as for example, cookies that track the contents of a user's shopping cart on an online shopping service, are exempted.","Yes, according to the ePrivacy Directive, cookies that remember what is in an online shopping basket would generally require user consent. This exemption applies only to ""strictly necessary"" cookies, which include tracking the contents of a user's shopping cart on an online shopping service. Other types of cookies, like those used for advertising purposes, are considered non-essential and thus subject to more stringent requirements regarding user consent.",,
+j05,q009,How much time do Europeans lose each year dealing with cookie pop-ups?,"[eprivacy::0031] bombarded with these banners on almost every website they visit, disrupting their browsing experience. Europeans collectively lose approximately 575 million hours each year clicking through cookie consent banners mandated by EU law.
+
+---
+
+[eprivacy::0030] EU cookie consent banners are pop-ups or notifications on websites asking whether users will accept browser cookies. The ePrivacy Directive requires websites to get explicit consent from users before storing cookies on their devices. Despite their intended privacy benefits, cookie consent banners are widely regarded as a nuisance. Users are constantly bombarded with these banners on almost every
+
+---
+
+[eprivacy::0029] Criticism of the EU cookie consent law",Approximately 575 million hours each year.,,
+j06,q011,Which part of the UK data protection statute covers how spy agencies handle personal data?,"[dpa2018::0007] Part 3 makes provision about the processing of personal data by competent authorities for law enforcement purposes and implements the Law Enforcement Directive.
+Part 4 makes provision about the processing of personal data by the intelligence services.
+Part 5 makes provision about the Information Commissioner.
+Part 6 makes provision about the enforcement of the data protection legislation.
+
+---
+
+[gdpr::0127] the transfer of personal data to countries within the EEA under UK GDPR. However, the UK is a third country under the EU GDPR, meaning that personal data may not be transferred from EU member states to the UK unless appropriate safeguards are imposed, or the European Commission performs an adequacy decision on the suitability of British data protection legislation (Chapter V). As part of the
+
+---
+
+[dpa2018::0000] The Data Protection Act 2018 (c. 12) is an act of the Parliament of the United Kingdom which updates data protection laws in the UK. It is a national law which complements the European Union's General Data Protection Regulation (GDPR) and replaces the Data Protection Act 1998.",Part 4,,
+j07,q013,Can Canada's privacy commissioner fine companies or force them to comply?,"[pipeda::0036] the parties but is more of a recommendation. The Commissioner does not have any powers to order compliance, award damages, or levy penalties. The organization complained about does not have to follow the recommendations. The complainant, with the report in hand, can then take the matter to the Federal Court of Canada. The responding organization cannot take the matter to the courts, because the
+
+---
+
+[pipeda::0035] The Act does not create an automatic right to sue for violations of the law's obligations. Instead, PIPEDA follows an ombudsman model in which complaints are taken to the Office of the Privacy Commissioner of Canada. The Commissioner is required to investigate the complaint and to produce a report at its conclusion. The report is not binding on the parties but is more of a recommendation. The
+
+---
+
+[pipeda::0029] Recently, the Office of the Privacy Commissioner of Canada, as well as academics and members of civil society, have claimed that it does not address modern challenges of privacy law sufficiently, calling for reforming PIPEDA in view of AI. The Canadian government responded to these calls with a comprehensive reform project currently under Parliamentary discussion.","No, the Commissioner does not have any powers to order compliance, award damages, or levy penalties.",,
+j08,q015,How was Canada's private-sector privacy law phased in across industries over time?,"[pipeda::0001] les documents électroniques) is a Canadian law relating to data privacy. It governs how private sector organizations collect, use and disclose personal information in the course of commercial business. In addition, the Act contains various provisions to facilitate the use of electronic documents. PIPEDA became law on 13 April 2000 to promote consumer trust in electronic commerce. The act was also
+
+---
+
+[pipeda::0002] trust in electronic commerce. The act was also intended to reassure the European Union that the Canadian privacy law was adequate to protect the personal information of European citizens. In accordance with section 29 of PIPEDA, Part I of the Act (""Protection of Personal Information in the Private Sector"") must be reviewed by Parliament every five years. The first Parliamentary review occurred in
+
+---
+
+[pipeda::0029] Recently, the Office of the Privacy Commissioner of Canada, as well as academics and members of civil society, have claimed that it does not address modern challenges of privacy law sufficiently, calling for reforming PIPEDA in view of AI. The Canadian government responded to these calls with a comprehensive reform project currently under Parliamentary discussion.","The Canadian government has been reviewing and updating its private-sector privacy laws periodically since their enactment in 2000. Specifically, according to the text provided:
+
+- **First Review**: The first Parliamentary review of Part I of the Act (""Protection of Personal Information in the Private Sector""), which includes PIPEDA, took place after five years from its initial implementation on April 13, 2000.
+  
+- **Subsequent Reviews**: Since then, there have been subsequent reviews of this part of the Act every five years. This indicates a systematic approach to revisiting and potentially amending the legislation based on evolving needs and technological advancements.
+
+Therefore, Canada's private-sector privacy law has been phased in through periodic reviews conducted every five years, ensuring ongoing adaptation to changing circumstances and technological developments.",,
+j09,q017,Which authority is responsible for enforcement of the LGPD (ANPD)?,"[lgpd::0002] The LGPD became law on September 18, 2020, but its enforceability was backdated August 16, 2020. Sanctions under the regulation will only be applied from August 1, 2021.
+The national data protection authority responsible for enforcement of the LGPD is the Autoridade Nacional de Proteção de Dados, or ANPD.
+
+---
+
+[lgpd::0015] On December 28, 2018 Michel Temer issued provisional measure 869 that amended the LGPD to include the creation of a national data protection authority responsible for enforcement of the law called Autoridade Nacional de Proteção de Dados (ANPD).
+
+---
+
+[lgpd::0009] Enforcement
+Article 48 of the LGPD states that the data controller must inform the national data protection authority and the data subject, if a security incident occurs that may result in relevant damage or risk, in a reasonable time period (as defined by ANPD).",The national data protection authority responsible for enforcing the LGPD is the Autoridade Nacional de Proteção de Dados (ANPD).,,
+j10,q019,Below what age do children need parental approval for data processing under the EU regulation?,"[coppa::0028] would not have required the parents of 13-16 year olds to consent to the data processing. COPPA 2.0, as well as KOSA, had not passed the House when the 118th US Congress expired on January 3, 2025. It was reintroduced in the Senate and passed unanimously in March 2026.
+
+---
+
+[gdpr::0028] Data subjects must be allowed to withdraw this consent at any time, and the process of doing so must not be harder than it was to opt in. A data controller may not refuse service to users who decline consent to processing that is not strictly necessary in order to use the service. Consent for children, defined in the regulation as being less than 16 years old (although with the option for member
+
+---
+
+[ccpa::0008] Responsibility and accountability
+Implement processes to obtain parental or guardian consent for minors under 13 years and the affirmative consent of minors between 13 and 16 years to data sharing for purposes (Cal. Civ. Code § 1798.120(c)).","Under the EU regulation, children between 13 and 16 years old require parental approval for data processing.",,
+j11,q021,GDPR Article 30 records of processing activities,"[gdpr::0072] Records of processing activities
+According to Article 30 records of processing activities have to be maintained by each organisation matching one of following criteria:
+
+---
+
+[gdpr::0007] processing situations, and miscellaneous final provisions. The GDPR also contains 173 recitals purposed to clarify scope and rationale for the regulatory provisions, as well as its legislative intents – Recital 4, for instance, begins by saying that the processing of personal data should be ""designed to serve mankind"".
+
+---
+
+[gdpr::0041] Right to object and automated decisions
+Article 21 of the GDPR allows an individual to object to processing personal information for marketing or non-service related purposes. This means the data controller must allow an individual the right to stop or prevent controller from processing their personal data.
+There are some instances where this objection does not apply. For example, if:","According to Article 30 of the GDPR, records of processing activities need to be maintained by each organization. These records can include details about specific processing situations and any miscellaneous final provisions. Additionally, the GDPR includes 173 recitals aimed at clarifying the scope and rationale behind the regulatory provisions, such as Recital 4 which emphasizes that personal data processing should be designed to benefit humanity.",,
+j12,q023,How large was the penalty British Airways ultimately paid over its 2018 web skimming breach?,"[gdpr::0168] In July 2019, the British Information Commissioner's Office issued an intention to fine British Airways a record £183 million (1.5% of turnover) for poor security arrangements that enabled a 2018 web skimming attack affecting around 380,000 transactions. British Airways was ultimately fined a reduced amount of £20m, with the ICO noting that they had ""considered both representations from BA and
+
+---
+
+[dodd_frank::0126] The SEC's 2017 annual report on the Dodd–Frank whistleblower program stated: ""Since the program's inception, the SEC has ordered wrongdoers in enforcement matters involving whistleblower information to pay over $975 million in total monetary sanctions, including more than $671 million in disgorgement of ill-gotten gains and interest, the majority of which has been...returned to harmed investors.""
+
+---
+
+[dsa::0082] The total fine of €120 million consisted of €45 million for the first finding, €35 million for the second, and €40 million for the third. The fines were imposed on X's Irish subsidiary X Internet Unlimited Company (XIUC) jointly and severally with X Holdings Corp., X.AI Holdings Corp., and Elon Musk personally as the group's majority shareholder.",British Airways was ultimately fined a reduced amount of £20m.,,
+j13,q025,GDPR Article 25 data protection by design and by default,"[gdpr::0056] To be able to demonstrate compliance with the GDPR, the data controller must implement measures that meet the principles of data protection by design and by default. Article 25 requires data protection measures to be designed into the development of business processes for products and services. Such measures include pseudonymising personal data, by the controller, as soon as possible (Recital
+
+---
+
+[gdpr::0062] Article 25 requires data protection to be designed into the development of business processes for products and services. Privacy settings must therefore be set at a high level by default, and technical and procedural measures shall be taken by the controller to make sure that the processing, throughout the whole processing lifecycle, complies with the regulation. Controllers shall also implement
+
+---
+
+[gdpr::0100] Adequacy of the technical and organizational measures;
+Data sharing with data processors;
+Data protection by design and by default;
+International data transfers.
+The GDPR certification also contributes to reduce the legal and financial risks of applicants, as well as of data controllers using certified data processing services.","According to GDPR Article 25, data protection should be designed into the development of business processes for products and services. This includes implementing measures such as pseudonymizing personal data as soon as possible (Recital). Additionally, privacy settings must be set at a high level by default, and technical and procedural measures need to be taken by the controller to ensure that all processing complies with the regulation. The article emphasizes the importance of adequate technical and organizational measures, data sharing with data processors, and adhering to data protection by design and by default principles.",,
+j14,q027,How quickly must a US health provider hand over a patient's records when asked?,"[hipaa::0028] of health care, or health care payment that can be linked to any individual. This includes any part of an individual's medical record or payment history. Covered entities must disclose PHI to the individual within 30 days upon request. They must also disclose PHI when required to do so by law, such as reporting suspected child abuse to state child welfare agencies.
+
+---
+
+[hipaa::0045] The Privacy Rule requires medical providers to give individuals access to their PHI. After an individual requests information in writing (typically using the provider's form for this purpose), a provider has up to 30 days to provide a copy of the information to the individual. An individual may request the information in electronic form or hard copy, and the provider is obligated to attempt to
+
+---
+
+[hipaa::0039] the consent of the individual whose records are being requested; they do not place any restrictions upon requesting health information directly from the subject of that information.",A US healthcare provider must hand over a patient's records within 30 days after receiving a written request from the patient.,,
+j15,q029,Which medical records are patients not entitled to see under the US health privacy law?,"[hipaa::0003] The law does not restrict patients from accessing their own information, except in limited cases. Furthermore, it does not prohibit patients from voluntarily sharing their health information however they choose, nor does it require confidentiality where a patient discloses medical information to family members, friends, or other individuals not employees of a covered entity.
+
+---
+
+[hipaa::0048] Individuals have the broad right to access their health-related information, including medical records, notes, images, lab results, and insurance and billing information. Explicitly excluded are the private psychotherapy notes of a provider and information gathered by a provider to defend against a lawsuit.
+
+---
+
+[ferpa::0002] provides privacy rights to students 18 years or older, or those in post-secondary institutions. Disclosure is permitted to parents of dependent students, and medical records are usually protected under FERPA rather than HIPAA. The law has faced criticism for concealing non-educational public records.","Under the U.S. Health Insurance Portability and Accountability Act (HIPAA), patients are generally not entitled to see certain types of medical records:
+
+1. **Private Psychotherapy Notes**: These are confidential communications between a mental health professional and a patient discussing personal issues.
+2. **Information Gathered for Defending Against a Lawsuit**: This includes any data collected by healthcare providers to support legal claims or defenses.
+
+These records fall outside the scope of what patients typically have access to under HIPAA regulations.",,
+j16,q031,How much did UCLA pay to settle claims that staff snooped on patient files?,"[hipaa::0036] it found no violation or after it provided informal guidance to the parties involved."" However, in July 2011, the University of California, Los Angeles, agreed to pay $865,500 in a settlement regarding potential HIPAA violations. An HHS Office for Civil Rights investigation showed that from 2005 to 2008, unauthorized employees repeatedly and without legitimate cause looked at the electronic
+
+---
+
+[hipaa::0142] The largest fines of $5.5 million, levied against Memorial Healthcare Systems in 2017 for accessing confidential information of 115,143 patients and of $4.3 million levied against Cignet Health of Maryland in 2010 for ignoring patients' requests to obtain copies of their own records and repeated ignoring of federal officials' inquiries
+
+---
+
+[ccpa::0014] Companies that become victims of data theft or other data security breaches can be ordered in civil class action lawsuits to pay statutory damages between $100 and $750 per California resident and incident, or actual damages, whichever is greater, and any other relief a court deems proper, subject to an option of the California Attorney General's Office to prosecute the company instead of","UCLA paid $865,500 in a settlement regarding potential HIPAA violations.",,
+j17,q033,Why is the US children's online privacy law considered harsh on small businesses?,"[coppa::0000] The Children's Online Privacy Protection Act of 1998 (COPPA) is a United States federal law. The act, effective April 21, 2000, applies to the online collection of personal information by persons or entities under U.S. jurisdiction about children under 13 years of age, including children outside the U.S. if the website or service is U.S.-based. It details what a website operator must include in a
+
+---
+
+[coppa::0074] kids from accessing pornography or lying about their age, and it does not ensure a totally safe environment online. Tech journalist Larry Magid, a long-time vocal opponent of the law, also notes that parents, not the government, hold the bulk of responsibility of protecting children online. COPPA has also been criticized for its potential chilling effect on children's apps, content, websites and
+
+---
+
+[coppa::0093] that because many child-directed apps profit off advertisement, they are more inclined and focused on collecting data for profit than children's privacy.","The Children's Online Privacy Protection Act of 1998 (COPPA) is a United States federal law designed to protect the privacy of children under 13 who use the internet. While it aims to provide protection, critics argue that it can be overly restrictive and burdensome for small businesses operating within this framework.
+One reason why COPPA might seem harsh on small businesses is that it requires them to obtain parental consent before collecting any personal information from children. This process can be time-consuming and costly, especially for smaller companies with limited resources. Additionally, compliance with COPPA regulations often involves implementing complex systems and processes to monitor and secure sensitive data, which can add significant overhead costs.
+Furthermore, some business owners may feel pressure to comply with these requirements even when they believe there is little risk of violating them. This perceived need for compliance could lead to unnecessary expenditures and administrative burdens, potentially deterring small businesses from engaging in activities that do not pose a substantial risk to children's privacy.
+In summary, while COPPA seeks to protect children's privacy, its stringent requirements and associated compliance obligations can create challenges for small businesses, making it appear harsher than necessary.",,
+j18,q035,By what vote margin did Congress pass the 2002 corporate accounting reform law?,"[sox::0055] The House passed Rep. Oxley's bill (H.R. 3763) on April 24, 2002, by a vote of 334 to 90. The House then referred the ""Corporate and Auditing Accountability, Responsibility, and Transparency Act"" or ""CAARTA"" to the Senate Banking Committee with the support of President George W. Bush and the SEC. At the time, however, the Chairman of that Committee, Senator Paul Sarbanes (D-MD), was preparing his
+
+---
+
+[sox::0060] The Committee approved the final conference bill on July 24, 2002, and gave it the name ""the Sarbanes–Oxley Act of 2002"". The next day, both houses of Congress voted on it without change, producing an overwhelming margin of victory: 423 to 3 in the House; and 99 to 0 in the Senate.
+
+---
+
+[sox::0000] The Sarbanes–Oxley Act of 2002 is a United States federal law that mandates certain practices in financial record keeping and reporting for corporations. The act, Pub. L. 107–204 (text) (PDF), 116 Stat. 745, enacted July 30, 2002, also known as the ""Public Company Accounting Reform and Investor Protection Act"" (in the Senate) and ""Corporate and Auditing Accountability, Responsibility, and","Congress passed the 2002 corporate accounting reform law with an overwhelming margin of victory. Specifically, there were 423 votes in favor in the House and 99 votes in favor in the Senate, resulting in a total of 423 to 3 in the House and 99 to 0 in the Senate.",,
+j19,q037,What punishment applies to an executive who knowingly signs off on a non-compliant financial report?,"[sox::0022] reports. It enumerates specific limits on the behaviors of corporate officers and describes specific forfeitures of benefits and civil penalties for non-compliance. For example, Section 302 requires that the company's ""principal officers"" (typically the chief executive officer and chief financial officer) certify and approve the integrity of their company financial reports quarterly.
+
+---
+
+[sox::0159] Whoever knowingly, with the intent to retaliate, takes any action harmful to any person, including interference with the lawful employment or livelihood of any person, for providing to a law enforcement officer any truthful information relating to the commission or possible commission of any federal offense, shall be fined under this title, imprisoned not more than 10 years, or both.
+
+---
+
+[sox::0151] Sarbanes–Oxley Section 906: Criminal Penalties for CEO/CFO financial statement certification
+§ 1350. Section 906 states: Failure of corporate officers to certify financial reports","The punishment for an executive who knowingly signs off on a non-compliant financial report is imprisonment not exceeding 10 years or a fine under this title, or both. This comes from Sarbanes-Oxley Section 404, which addresses the responsibility of corporate officers in certifying the accuracy of financial statements.",,
+j20,q039,Lawson v. FMR whistleblower protection for contractors,"[sox::0192] In its March 4, 2014, Lawson v. FMR, LLC decision, the United States Supreme Court rejected a narrow interpretation of the SOX whistleblower protection and instead held that the anti-retaliation protection that the Sarbanes–Oxley Act of 2002 provided to whistleblowers applies also to employees of a public company's private contractors and subcontractors, including the attorneys and accountants
+
+---
+
+[sox::0193] including the attorneys and accountants who prepare the SEC filings of public companies. Subsequent interpretations of Lawson, however, suggest that the disclosures of a contractor's employee are protected only if those disclosures pertain to fraud perpetrated by a publicly traded company, as opposed to wrongdoing by a private contractor.
+
+---
+
+[sox::0142] Section 806 of the Sarbanes–Oxley Act, also known as the whistleblower-protection provision, prohibits any ""officer, employee, contractor, subcontractor, or agent"" of a publicly traded company from retaliating against ""an employee"" for disclosing reasonably perceived potential or actual violations of the six enumerated categories of protected conduct in Section 806 (securities fraud which","The United States Supreme Court rejected a narrow interpretation of the SOX whistleblower protection and held that the anti-retaliation protection applied to employees of a public company's private contractors and subcontractors, including attorneys and accountants who prepare the SEC filings of public companies. However, subsequent interpretations suggested that disclosures made by contractors' employees were protected only if they pertained to fraud committed by a publicly traded company, not by a private contractor.",,
+j21,q041,What share of monetary sanctions can a corporate whistleblower receive under the 2010 financial reform law?,"[dodd_frank::0093] of any monetary sanctions put on the corporation above one million dollars. These provisions also enact anti-retaliation rules that entitle whistleblowers the right to have a jury trial if they feel they have been wrongfully terminated as a result of whistleblowing. If the jury finds that whistleblowers have been wrongfully terminated, then they must be reinstated to their positions and receive
+
+---
+
+[dodd_frank::0126] The SEC's 2017 annual report on the Dodd–Frank whistleblower program stated: ""Since the program's inception, the SEC has ordered wrongdoers in enforcement matters involving whistleblower information to pay over $975 million in total monetary sanctions, including more than $671 million in disgorgement of ill-gotten gains and interest, the majority of which has been...returned to harmed investors.""
+
+---
+
+[dodd_frank::0092] Provisions from Dodd–Frank found in section 922 also address whistleblower protection. Under new regulations any whistleblowers who voluntarily expose inappropriate behavior in public corporations can be rewarded with substantial compensation and will have their jobs protected. Regulations entitle whistleblowers to between ten and thirty percent of any monetary sanctions put on the corporation","Under the 2010 financial reform law, whistleblowers can receive between ten and thirty percent of any monetary sanctions put on the corporation.",,
+j22,q043,How many rules and studies did the 2010 Wall Street law require regulators to produce?,"[dodd_frank::0032] Overview
+
+The Dodd–Frank Wall Street Reform and Consumer Protection Act is categorized into 16 titles and, by one law firm's count, it requires that regulators create 243 rules, conduct 67 studies, and issue 22 periodic reports.
+The stated aim of the legislation is:
+
+---
+
+[dodd_frank::0122] Law professor and bankruptcy expert David Skeel concluded that the law has two major themes: ""government partnership with the largest Wall Street banks and financial institutions"" and ""a system of ad hoc interventions by regulators that are divorced from basic rule-of-law constraints."" While he states that ""the overall pattern of the legislation is disturbing,"" he also concludes that some are
+
+---
+
+[dodd_frank::0000] The Dodd–Frank Wall Street Reform and Consumer Protection Act, commonly referred to as the Dodd–Frank Act, is a United States federal law enacted on July 21, 2010, as the primary legislative response to the 2007–2008 financial crisis—the worst financial crisis since the Great Depression. Named for its sponsors, Senator Chris Dodd and Representative Barney Frank, the law was signed by President","According to the provided context, the Dodd–Frank Wall Street Reform and Consumer Protection Act required regulators to create 243 rules, conduct 67 studies, and issue 22 periodic reports.",,
+j23,q045,How many card transactions a year put a merchant in the top compliance tier?,"[pci_dss::0028] Level 1 – Over six million transactions annually
+Level 2 – Between one and six million transactions annually
+Level 3 – Between 20,000 and one million transactions annually, and all e-commerce merchants
+Level 4 – Less than 20,000 transactions annually
+Each card issuer maintains a table of compliance levels and a table for service providers.
+
+---
+
+[pci_dss::0080] Compliance validation is required only for level 1 to 3 merchants and may be optional for Level 4, depending on the card brand and acquirer. According to Visa's compliance validation details for merchants, level-4 merchant compliance-validation requirements (""Merchants processing less than 20,000 Visa e-commerce transactions annually and all other merchants processing up to 1 million Visa
+
+---
+
+[pci_dss::0081] other merchants processing up to 1 million Visa transactions annually"") are set by the acquirer. Over 80 percent of payment-card compromises between 2005 and 2007 affected level-4 merchants, who handled 32 percent of all such transactions.","To determine how many card transactions a year put a merchant in the top compliance tier (levels 1 through 3), we need to analyze the given information:
+
+1. **Level 1**: Over six million transactions annually.
+2. **Level 2**: Between one and six million transactions annually.
+3. **Level 3**: Between 20,000 and one million transactions annually, and all e-commerce merchants.
+
+From this information:
+- A merchant must process more than 6 million transactions per year to fall into the ""over six million"" category.
+- For Level 2, it specifies between one and six million transactions annually.
+- For Level 3, it states between 20,000 and one million transactions annually, but also mentions that all e-commerce merchants qualify under this range.
+
+Given these points, let's summarize:
+- **Level 1** requires over 6 million transactions.
+- **Level 2** requires between 1 and 6 million transactions.
+- **Level 3** requires between 20,000 and 1 million transactions, which includes all e-commerce merchants.
+
+Therefore, the highest compliance tier (Level 1) requires more than 6 million transactions annually. The next tiers (Levels",,
+j24,q047,Which card companies ran their own security programs before a common industry standard existed?,"[pci_dss::0008] The main payment card brands then founded the Payment Card Industry Security Standards Council (PCI SSC) and aligned their policies to create the PCI DSS. PCI DSS has since been implemented and followed by numerous organizations around the world.
+
+---
+
+[pci_dss::0007] streamline and unify these information security standards. Each program had its own methods and guidance regarding compliance validation, assessments, and requirements. To address interoperability problems among the existing standards, the combined effort by these payment card brands resulted in the release of version 1.0 of PCI DSS in December 2004. The main payment card brands then founded the
+
+---
+
+[pci_dss::0004] Self-assessment questionnaire (SAQ)
+Firm-specific Internal Security Assessor (ISA)
+External Qualified Security Assessor (QSA)
+
+History
+Before the PCI DSS was launched, payment card information security was handled by the five major payment card brands: Visa, Mastercard, American Express, Discover, and JCB. They each had different independent security programs:","Before the PCI DSS was launched, payment card information security was handled by the five major payment card brands: Visa, Mastercard, American Express, Discover, and JCB. Each of them had their own independent security programs.",,
+j25,q049,How long is the certification cycle for an information security management system?,"[iso27001::0048] Initial certification to ISO/IEC 27001, like certification to other ISO management system standards, involves an external audit carried out in two stages, after which the certification body takes a certification decision. Certification is then maintained by surveillance audits and by a recertification audit within a three-year certification cycle. The requirements applying to certification bodies
+
+---
+
+[iso27001::0059] calendar year except in recertification years. A recertification audit is required before the certificate expires, normally on a three-year cycle. Audits may be conducted more frequently where the certification scheme, the risks involved or significant changes to the ISMS make it necessary.
+
+---
+
+[iso27001::0058] Once a certificate has been issued, follow-up audits confirm that the ISMS continues to operate as specified and intended and that the organization remains in conformity with the standard. The first surveillance audit takes place within twelve months of the certification decision, and surveillance audits are then conducted at least once each calendar year except in recertification years. A",The certification cycle for an information security management system (ISMS) typically lasts for three years. This period includes both initial certification and subsequent maintenance through surveillance audits and recertification audits.,,
+j26,q051,Does the international standards body itself hand out information security certificates?,"[iso27001::0078] internationally recognized information security management standards, and providers certified to ISO/IEC 27001:2013 are presumed to meet those standards.
+
+---
+
+[iso27001::0055] and management reviews and the results of the organization's monitoring, measurement and reporting of information security performance. Certification audits are led by an audit team leader. The audit team does not itself grant certification: it reports its findings and makes a recommendation, and the certification body then takes the certification decision, which must be made by personnel who did
+
+---
+
+[iso27001::0077] otherwise requires them to encourage the use of European and international standards ""without imposing or discriminating in favour of the use of a particular type of technology"". Under European Union rules on the traceability of tobacco products, providers of data storage services must declare that the repository is managed in accordance with internationally recognized information security","No, the international standards body does not directly hand out information security certificates. Instead, they provide guidelines and certifications through organizations like ISO (International Organization for Standardization) that can issue these certificates based on compliance with their standards.",,
+j27,q053,What should an organisation do after comparing where its security posture is now with where it wants to be?,"[iso27001::0036] if that is practicable, take account of applicable information security requirements and of the results of risk assessment and risk treatment, and be monitored, communicated and updated as appropriate; the organization must also determine what will be done to achieve them, what resources will be required, who will be responsible, when they are to be achieved and how the results will be evaluated.
+
+---
+
+[gdpr::0081] documentation of suitable safeguards;
+where possible, a general description of the technical and organisational security measures referred to in Article 32(1).
+
+---
+
+[nist_csf::0060] Below are one-way organizations can use an Organizational Profile to improve their cybersecurity practices, as described by NIST CSF 2.0:","An organisation should compare its current security posture with its desired state and then develop strategies or plans to bridge the gap between these two states. This process involves identifying gaps, understanding risks, assessing vulnerabilities, and planning actions to mitigate threats effectively. Additionally, continuous monitoring and updating of security measures based on new findings and evolving threat landscapes are crucial for maintaining robust cybersecurity practices.",,
+j28,q055,Which platforms does the European Commission police directly under the EU online content law?,"[dsa::0071] As of November 2025, the European Commission has started 14 investigations into DSA compliance of VLOPS or VLOSEs. The platforms under ongoing or finished investigations by the Commission include AliExpress, Facebook, Instagram, Temu, TikTok, and X, as well as a number of pornographic platforms.
+
+---
+
+[dsa::0056] The DSA establishes a two-tiered ""hybrid enforcement framework"" where the rules are enforced both by the European Commission and the national authorities in each EU member state. The Commission is primarily responsible for the enforcement in relation to designated very large online platforms (VLOPs) and very large online search engines (VLOSEs), while the competent national authorities enforce
+
+---
+
+[dsa::0064] On 25 April 2023, the European Commission designated the first 19 VLOPs and VLOSEs under the DSA. The first group of platforms was required to comply from 25 August 2023. Three further platforms, all of them providing adult content, were added in December 2023. Online retailers Shein and Temu were designated as VLOPs in April and May 2024, respectively, while the adult content platform XNXX was","Under the EU's Digital Services Act (DSA), the European Commission polices designated very large online platforms (VLOPs) and very large online search engines (VLOSEs). As of November 2025, these platforms include AliExpress, Facebook, Instagram, Temu, TikTok, and X, as well as several pornographic platforms. The Commission is primarily responsible for enforcing its rules against VLOPs and VLOSEs, with national authorities handling enforcement in other cases.",,
+j29,q057,DSA out-of-court dispute settlement ODS bodies content moderation decision,"[dsa::0028] The DSA also gives users the right to turn to out-of-court dispute settlement (ODS) bodies, if they think a decision by an online platform was wrong. Users may select any entity that has been certified as a dispute settlement body in the EU for their type of dispute and request a review of a platform's content moderation decision. There are currently nine ODS entities certified in the EU. They
+
+---
+
+[dsa::0029] nine ODS entities certified in the EU. They operate on a cost-covering principle and generally do not charge any fees to consumers unless there is a clear indication of abuse. The first ODS body certified under the DSA in the European Union was ADROIT, a Maltese ODS serving users of all relevant platforms. Another relevant out-of-court dispute settlement body is Appeals Centre Europe (initially
+
+---
+
+[dsa::0026] Users can contest moderation decisions by online platforms restricting their accounts or sanctioning their content in several ways. This right also applies to notices of illegal content that were rejected by the platform. According to the DSA, users may appeal through the internal complaint-handling system of platforms. Platforms are required to promptly review their decisions.","DSA out-of-court dispute settlement (ODS) bodies provide users with the option to challenge decisions made by online platforms regarding account restrictions or content sanctions. These bodies allow users to seek reviews of such decisions without going through traditional legal channels. The process involves selecting an appropriate ODS body based on the nature of the dispute and requesting a review of the platform's content moderation actions. Currently, there are nine ODS entities certified in the EU that offer this service. These bodies typically cover costs associated with disputes and do not charge fees directly to consumers unless there is evidence of abuse. The DSA mandates that these ODS bodies follow a cost-covering principle, ensuring that they remain financially sustainable while providing free services to users.",,
+j30,q059,Who sits on the board that advises the Commission on applying the AI rules?,"[ai_act::0032] European Artificial Intelligence Board: composed of one representative from each Member State, the Board will advise and assist the Commission and Member States to facilitate the consistent and effective application of the AI Act. Its tasks include gathering and sharing technical and regulatory expertise, providing recommendations, written opinions, and other advice.
+
+---
+
+[ai_act::0034] Scientific Panel of Independent Experts: this panel will provide technical advice and input to the AI Office and national authorities, enforce rules for general-purpose AI models (notably by launching qualified alerts of possible risks to the AI Office), and ensure that the rules and implementations of the AI Act correspond to the latest scientific findings.
+
+---
+
+[ai_act::0031] AI Office: attached to the European Commission, this authority will coordinate the implementation of the AI Act in all Member States and oversee the compliance of general-purpose AI providers. It can also request information or open investigations when serious issues are suspected.",The European Artificial Intelligence Board is composed of one representative from each Member State and serves as the advisory body for the Commission and Member States regarding the consistent and effective application of the AI Act.,,

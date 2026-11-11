@@ -1,0 +1,771 @@
+{
+  "n_items": 30,
+  "threshold": 0.5,
+  "backend": "local:Qwen/Qwen2.5-1.5B-Instruct",
+  "unsure": {
+    "human": [
+      "j01",
+      "j09",
+      "j12",
+      "j16"
+    ],
+    "claude": []
+  },
+  "vs_judge": {
+    "human": {
+      "app_truncated": {
+        "n": 26,
+        "agreement": 0.6538461538461539,
+        "kappa": 0.0,
+        "kappa_ci": [
+          0.0,
+          0.0
+        ],
+        "confusion": {
+          "both_yes": 17,
+          "both_no": 0,
+          "human_yes_judge_no": 0,
+          "human_no_judge_yes": 9
+        },
+        "excluded_unsure": [
+          "j01",
+          "j09",
+          "j12",
+          "j16"
+        ],
+        "unparseable_judge_outputs": [],
+        "rater_yes_rate": 0.6538461538461539,
+        "judge_yes_rate": 1.0,
+        "threshold_sweep": {
+          "0.3": {
+            "agreement": 0.6538461538461539,
+            "kappa": 0.0
+          },
+          "0.4": {
+            "agreement": 0.6538461538461539,
+            "kappa": 0.0
+          },
+          "0.5": {
+            "agreement": 0.6538461538461539,
+            "kappa": 0.0
+          },
+          "0.6": {
+            "agreement": 0.6538461538461539,
+            "kappa": 0.0
+          },
+          "0.7": {
+            "agreement": 0.6538461538461539,
+            "kappa": 0.0
+          },
+          "0.8": {
+            "agreement": 0.5,
+            "kappa": -0.134228187919463
+          },
+          "0.9": {
+            "agreement": 0.5,
+            "kappa": -0.134228187919463
+          }
+        },
+        "disagreements": [
+          {
+            "item_id": "j02",
+            "qid": "q003",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j07",
+            "qid": "q013",
+            "rater": false,
+            "judge_score": 0.7
+          },
+          {
+            "item_id": "j11",
+            "qid": "q021",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j13",
+            "qid": "q025",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j19",
+            "qid": "q037",
+            "rater": false,
+            "judge_score": 0.7
+          },
+          {
+            "item_id": "j26",
+            "qid": "q051",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j27",
+            "qid": "q053",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j28",
+            "qid": "q055",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j29",
+            "qid": "q057",
+            "rater": false,
+            "judge_score": 0.9
+          }
+        ]
+      },
+      "full_context": {
+        "n": 26,
+        "agreement": 0.6538461538461539,
+        "kappa": 0.0,
+        "kappa_ci": [
+          0.0,
+          0.0
+        ],
+        "confusion": {
+          "both_yes": 17,
+          "both_no": 0,
+          "human_yes_judge_no": 0,
+          "human_no_judge_yes": 9
+        },
+        "excluded_unsure": [
+          "j01",
+          "j09",
+          "j12",
+          "j16"
+        ],
+        "unparseable_judge_outputs": [],
+        "rater_yes_rate": 0.6538461538461539,
+        "judge_yes_rate": 1.0,
+        "threshold_sweep": {
+          "0.3": {
+            "agreement": 0.6538461538461539,
+            "kappa": 0.0
+          },
+          "0.4": {
+            "agreement": 0.6538461538461539,
+            "kappa": 0.0
+          },
+          "0.5": {
+            "agreement": 0.6538461538461539,
+            "kappa": 0.0
+          },
+          "0.6": {
+            "agreement": 0.6538461538461539,
+            "kappa": 0.0
+          },
+          "0.7": {
+            "agreement": 0.6538461538461539,
+            "kappa": 0.0
+          },
+          "0.8": {
+            "agreement": 0.5,
+            "kappa": -0.134228187919463
+          },
+          "0.9": {
+            "agreement": 0.5,
+            "kappa": -0.134228187919463
+          }
+        },
+        "disagreements": [
+          {
+            "item_id": "j02",
+            "qid": "q003",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j07",
+            "qid": "q013",
+            "rater": false,
+            "judge_score": 0.7
+          },
+          {
+            "item_id": "j11",
+            "qid": "q021",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j13",
+            "qid": "q025",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j19",
+            "qid": "q037",
+            "rater": false,
+            "judge_score": 0.7
+          },
+          {
+            "item_id": "j26",
+            "qid": "q051",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j27",
+            "qid": "q053",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j28",
+            "qid": "q055",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j29",
+            "qid": "q057",
+            "rater": false,
+            "judge_score": 0.9
+          }
+        ]
+      }
+    },
+    "claude": {
+      "app_truncated": {
+        "n": 30,
+        "agreement": 0.6,
+        "kappa": 0.0,
+        "kappa_ci": [
+          0.0,
+          0.0
+        ],
+        "confusion": {
+          "both_yes": 18,
+          "both_no": 0,
+          "human_yes_judge_no": 0,
+          "human_no_judge_yes": 12
+        },
+        "excluded_unsure": [],
+        "unparseable_judge_outputs": [],
+        "rater_yes_rate": 0.6,
+        "judge_yes_rate": 1.0,
+        "threshold_sweep": {
+          "0.3": {
+            "agreement": 0.6,
+            "kappa": 0.0
+          },
+          "0.4": {
+            "agreement": 0.6,
+            "kappa": 0.0
+          },
+          "0.5": {
+            "agreement": 0.6,
+            "kappa": 0.0
+          },
+          "0.6": {
+            "agreement": 0.6,
+            "kappa": 0.0
+          },
+          "0.7": {
+            "agreement": 0.6,
+            "kappa": 0.0
+          },
+          "0.8": {
+            "agreement": 0.6,
+            "kappa": 0.11764705882352942
+          },
+          "0.9": {
+            "agreement": 0.5666666666666667,
+            "kappa": 0.05797101449275352
+          }
+        },
+        "disagreements": [
+          {
+            "item_id": "j01",
+            "qid": "q001",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j04",
+            "qid": "q007",
+            "rater": false,
+            "judge_score": 0.7
+          },
+          {
+            "item_id": "j08",
+            "qid": "q015",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j10",
+            "qid": "q019",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j11",
+            "qid": "q021",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j13",
+            "qid": "q025",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j15",
+            "qid": "q029",
+            "rater": false,
+            "judge_score": 0.7
+          },
+          {
+            "item_id": "j17",
+            "qid": "q033",
+            "rater": false,
+            "judge_score": 0.7
+          },
+          {
+            "item_id": "j19",
+            "qid": "q037",
+            "rater": false,
+            "judge_score": 0.7
+          },
+          {
+            "item_id": "j26",
+            "qid": "q051",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j27",
+            "qid": "q053",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j29",
+            "qid": "q057",
+            "rater": false,
+            "judge_score": 0.9
+          }
+        ]
+      },
+      "full_context": {
+        "n": 30,
+        "agreement": 0.6,
+        "kappa": 0.0,
+        "kappa_ci": [
+          0.0,
+          0.0
+        ],
+        "confusion": {
+          "both_yes": 18,
+          "both_no": 0,
+          "human_yes_judge_no": 0,
+          "human_no_judge_yes": 12
+        },
+        "excluded_unsure": [],
+        "unparseable_judge_outputs": [],
+        "rater_yes_rate": 0.6,
+        "judge_yes_rate": 1.0,
+        "threshold_sweep": {
+          "0.3": {
+            "agreement": 0.6,
+            "kappa": 0.0
+          },
+          "0.4": {
+            "agreement": 0.6,
+            "kappa": 0.0
+          },
+          "0.5": {
+            "agreement": 0.6,
+            "kappa": 0.0
+          },
+          "0.6": {
+            "agreement": 0.6,
+            "kappa": 0.0
+          },
+          "0.7": {
+            "agreement": 0.6,
+            "kappa": 0.0
+          },
+          "0.8": {
+            "agreement": 0.6,
+            "kappa": 0.11764705882352942
+          },
+          "0.9": {
+            "agreement": 0.6,
+            "kappa": 0.11764705882352942
+          }
+        },
+        "disagreements": [
+          {
+            "item_id": "j01",
+            "qid": "q001",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j04",
+            "qid": "q007",
+            "rater": false,
+            "judge_score": 0.7
+          },
+          {
+            "item_id": "j08",
+            "qid": "q015",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j10",
+            "qid": "q019",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j11",
+            "qid": "q021",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j13",
+            "qid": "q025",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j15",
+            "qid": "q029",
+            "rater": false,
+            "judge_score": 0.75
+          },
+          {
+            "item_id": "j17",
+            "qid": "q033",
+            "rater": false,
+            "judge_score": 0.7
+          },
+          {
+            "item_id": "j19",
+            "qid": "q037",
+            "rater": false,
+            "judge_score": 0.7
+          },
+          {
+            "item_id": "j26",
+            "qid": "q051",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j27",
+            "qid": "q053",
+            "rater": false,
+            "judge_score": 0.9
+          },
+          {
+            "item_id": "j29",
+            "qid": "q057",
+            "rater": false,
+            "judge_score": 0.9
+          }
+        ]
+      }
+    }
+  },
+  "variants": {
+    "app_truncated": {
+      "n": 26,
+      "agreement": 0.6538461538461539,
+      "kappa": 0.0,
+      "kappa_ci": [
+        0.0,
+        0.0
+      ],
+      "confusion": {
+        "both_yes": 17,
+        "both_no": 0,
+        "human_yes_judge_no": 0,
+        "human_no_judge_yes": 9
+      },
+      "excluded_unsure": [
+        "j01",
+        "j09",
+        "j12",
+        "j16"
+      ],
+      "unparseable_judge_outputs": [],
+      "rater_yes_rate": 0.6538461538461539,
+      "judge_yes_rate": 1.0,
+      "threshold_sweep": {
+        "0.3": {
+          "agreement": 0.6538461538461539,
+          "kappa": 0.0
+        },
+        "0.4": {
+          "agreement": 0.6538461538461539,
+          "kappa": 0.0
+        },
+        "0.5": {
+          "agreement": 0.6538461538461539,
+          "kappa": 0.0
+        },
+        "0.6": {
+          "agreement": 0.6538461538461539,
+          "kappa": 0.0
+        },
+        "0.7": {
+          "agreement": 0.6538461538461539,
+          "kappa": 0.0
+        },
+        "0.8": {
+          "agreement": 0.5,
+          "kappa": -0.134228187919463
+        },
+        "0.9": {
+          "agreement": 0.5,
+          "kappa": -0.134228187919463
+        }
+      },
+      "disagreements": [
+        {
+          "item_id": "j02",
+          "qid": "q003",
+          "rater": false,
+          "judge_score": 0.9
+        },
+        {
+          "item_id": "j07",
+          "qid": "q013",
+          "rater": false,
+          "judge_score": 0.7
+        },
+        {
+          "item_id": "j11",
+          "qid": "q021",
+          "rater": false,
+          "judge_score": 0.9
+        },
+        {
+          "item_id": "j13",
+          "qid": "q025",
+          "rater": false,
+          "judge_score": 0.9
+        },
+        {
+          "item_id": "j19",
+          "qid": "q037",
+          "rater": false,
+          "judge_score": 0.7
+        },
+        {
+          "item_id": "j26",
+          "qid": "q051",
+          "rater": false,
+          "judge_score": 0.9
+        },
+        {
+          "item_id": "j27",
+          "qid": "q053",
+          "rater": false,
+          "judge_score": 0.9
+        },
+        {
+          "item_id": "j28",
+          "qid": "q055",
+          "rater": false,
+          "judge_score": 0.9
+        },
+        {
+          "item_id": "j29",
+          "qid": "q057",
+          "rater": false,
+          "judge_score": 0.9
+        }
+      ]
+    },
+    "full_context": {
+      "n": 26,
+      "agreement": 0.6538461538461539,
+      "kappa": 0.0,
+      "kappa_ci": [
+        0.0,
+        0.0
+      ],
+      "confusion": {
+        "both_yes": 17,
+        "both_no": 0,
+        "human_yes_judge_no": 0,
+        "human_no_judge_yes": 9
+      },
+      "excluded_unsure": [
+        "j01",
+        "j09",
+        "j12",
+        "j16"
+      ],
+      "unparseable_judge_outputs": [],
+      "rater_yes_rate": 0.6538461538461539,
+      "judge_yes_rate": 1.0,
+      "threshold_sweep": {
+        "0.3": {
+          "agreement": 0.6538461538461539,
+          "kappa": 0.0
+        },
+        "0.4": {
+          "agreement": 0.6538461538461539,
+          "kappa": 0.0
+        },
+        "0.5": {
+          "agreement": 0.6538461538461539,
+          "kappa": 0.0
+        },
+        "0.6": {
+          "agreement": 0.6538461538461539,
+          "kappa": 0.0
+        },
+        "0.7": {
+          "agreement": 0.6538461538461539,
+          "kappa": 0.0
+        },
+        "0.8": {
+          "agreement": 0.5,
+          "kappa": -0.134228187919463
+        },
+        "0.9": {
+          "agreement": 0.5,
+          "kappa": -0.134228187919463
+        }
+      },
+      "disagreements": [
+        {
+          "item_id": "j02",
+          "qid": "q003",
+          "rater": false,
+          "judge_score": 0.9
+        },
+        {
+          "item_id": "j07",
+          "qid": "q013",
+          "rater": false,
+          "judge_score": 0.7
+        },
+        {
+          "item_id": "j11",
+          "qid": "q021",
+          "rater": false,
+          "judge_score": 0.9
+        },
+        {
+          "item_id": "j13",
+          "qid": "q025",
+          "rater": false,
+          "judge_score": 0.9
+        },
+        {
+          "item_id": "j19",
+          "qid": "q037",
+          "rater": false,
+          "judge_score": 0.7
+        },
+        {
+          "item_id": "j26",
+          "qid": "q051",
+          "rater": false,
+          "judge_score": 0.9
+        },
+        {
+          "item_id": "j27",
+          "qid": "q053",
+          "rater": false,
+          "judge_score": 0.9
+        },
+        {
+          "item_id": "j28",
+          "qid": "q055",
+          "rater": false,
+          "judge_score": 0.9
+        },
+        {
+          "item_id": "j29",
+          "qid": "q057",
+          "rater": false,
+          "judge_score": 0.9
+        }
+      ]
+    }
+  },
+  "human_vs_claude": {
+    "n": 26,
+    "agreement": 0.6923076923076923,
+    "kappa": 0.3540372670807453,
+    "kappa_ci": [
+      -0.0368098159509202,
+      0.6867469879518072
+    ],
+    "confusion": {
+      "both_yes": 12,
+      "both_no": 6,
+      "human_yes_judge_no": 5,
+      "human_no_judge_yes": 3
+    },
+    "disagreements": [
+      {
+        "item_id": "j02",
+        "human": false,
+        "claude": true
+      },
+      {
+        "item_id": "j04",
+        "human": true,
+        "claude": false
+      },
+      {
+        "item_id": "j07",
+        "human": false,
+        "claude": true
+      },
+      {
+        "item_id": "j08",
+        "human": true,
+        "claude": false
+      },
+      {
+        "item_id": "j10",
+        "human": true,
+        "claude": false
+      },
+      {
+        "item_id": "j15",
+        "human": true,
+        "claude": false
+      },
+      {
+        "item_id": "j17",
+        "human": true,
+        "claude": false
+      },
+      {
+        "item_id": "j28",
+        "human": false,
+        "claude": true
+      }
+    ],
+    "excluded_unsure": [
+      "j01",
+      "j09",
+      "j12",
+      "j16"
+    ]
+  }
+}

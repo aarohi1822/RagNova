@@ -109,14 +109,29 @@ def render(metrics: dict) -> str:
     j = metrics["judge_reliability"]
     lines.append("")
     if j["status"] == "complete":
-        lines += ["| LLM-judge variant | Agreement with human labels | Cohen's κ [95% CI] |",
-                  "|---|---|---|"]
-        for variant, r in j["agreement"]["variants"].items():
+        agr = j["agreement"]
+
+        def kappa(r: dict) -> str:
             klo, khi = r["kappa_ci"]
-            lines.append(f"| {variant} | {r['agreement']:.2f} | "
-                         f"{r['kappa']:.2f} [{klo:.2f}–{khi:.2f}] |")
-        lines.append("")
-        lines.append(f"Judge: `{j['backend']}`, {j['items']} manually labeled answers.")
+            k = r["kappa"]
+            k = "n/a" if k is None or (isinstance(k, float) and k != k) else f"{k:.2f}"
+            return f"{k} [{klo:.2f}–{khi:.2f}]"
+
+        lines += ["| LLM-judge reliability | n | Agreement | Cohen's κ [95% CI] | Judge yes-rate |",
+                  "|---|---|---|---|---|"]
+        for rater, by_variant in agr.get("vs_judge", {"human": agr["variants"]}).items():
+            for variant, r in by_variant.items():
+                lines.append(f"| {rater} vs judge ({variant}) | {r['n']} | {r['agreement']:.2f} "
+                             f"| {kappa(r)} | {r['judge_yes_rate']:.2f} |")
+        if agr.get("human_vs_claude"):
+            r = agr["human_vs_claude"]
+            lines.append(f"| human vs claude (inter-annotator) | {r['n']} "
+                         f"| {r['agreement']:.2f} | {kappa(r)} | – |")
+        unsure = agr.get("unsure", {}).get("human", [])
+        lines += ["", f"Judge: `{j['backend']}`, threshold {agr['threshold']}, "
+                      f"{j['items']} answers; {len(unsure)} marked unsure by the human rater "
+                      "and excluded from human comparisons. Claude labels were made "
+                      "independently before the human labels."]
     else:
         lines.append(f"LLM-judge agreement: **pending** — {j['labeled']}/{j['items']} answers "
                      f"manually labeled (judge: `{j['backend']}`).")

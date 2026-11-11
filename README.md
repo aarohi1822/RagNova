@@ -146,7 +146,15 @@ Retrieval on a 60-query benchmark (71 gold passages, 1425 passages from 16 publi
 | Hybrid + cross-encoder | 0.833 [0.73–0.92] | 0.732 [0.63–0.83] | 130.7 ms | 145.7 ms |
 | App hybrid (concat, ref.) | 0.767 [0.66–0.87] | 0.613 [0.51–0.71] | 8.8 ms | 9.4 ms |
 
-LLM-judge agreement: **pending** — 0/30 answers manually labeled (judge: `local:Qwen/Qwen2.5-1.5B-Instruct`).
+| LLM-judge reliability | n | Agreement | Cohen's κ [95% CI] | Judge yes-rate |
+|---|---|---|---|---|
+| human vs judge (app_truncated) | 26 | 0.65 | 0.00 [0.00–0.00] | 1.00 |
+| human vs judge (full_context) | 26 | 0.65 | 0.00 [0.00–0.00] | 1.00 |
+| claude vs judge (app_truncated) | 30 | 0.60 | 0.00 [0.00–0.00] | 1.00 |
+| claude vs judge (full_context) | 30 | 0.60 | 0.00 [0.00–0.00] | 1.00 |
+| human vs claude (inter-annotator) | 26 | 0.69 | 0.35 [-0.04–0.69] | – |
+
+Judge: `local:Qwen/Qwen2.5-1.5B-Instruct`, threshold 0.5, 30 answers; 4 marked unsure by the human rater and excluded from human comparisons. Claude labels were made independently before the human labels.
 
 Method, caveats and how to reproduce: [eval/README.md](eval/README.md).
 <!-- results:end -->

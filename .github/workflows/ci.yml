@@ -17,9 +17,11 @@ jobs:
       - name: Install
         run: |
           python -m pip install --upgrade pip
+          # pyproject.toml is kept as pyproject.local.toml so Streamlit Cloud ignores it
+          cp pyproject.local.toml pyproject.toml
           python -m pip install -e ".[dev]"
       - name: Lint
-        run: ruff check backend frontend tests scripts
+        run: ruff check backend frontend tests scripts eval
       - name: Test
         run: pytest -q
 

@@ -1,5 +1,4 @@
 import os
-import io
 import time
 import json
 import sqlite3
@@ -15,7 +14,6 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferWindowMemory
 from langchain_groq import ChatGroq
-from langchain.schema import Document
 
 # Optional: BM25 for hybrid retrieval
 try:

@@ -96,11 +96,11 @@ ragnova/
 | Feature | Description | Status |
 |---|---|---|
 | 📄 Multi-format ingestion | PDF, DOCX, TXT with metadata extraction | ✅ |
-| 🔀 Hybrid retrieval | FAISS semantic + BM25 keyword fusion | ✅ |
+| 🔀 Hybrid retrieval | FAISS semantic + BM25 keyword candidates; the current merge ranks semantic hits first (see [Benchmark Results](#-benchmark-results)) | ⚠️ |
 | 🎯 Cross-encoder reranking | `ms-marco-MiniLM-L-6-v2` scores each chunk | ✅ |
 | 🔁 Query rewriting | LLM rewrites question before retrieval | ✅ |
-| 🛡️ Hallucination guard | Grounding check — no fake answers | ✅ |
-| 📊 LLM-as-judge eval | Per-query faithfulness + relevance scoring | ✅ |
+| 🛡️ Hallucination guard | Word-overlap grounding check — replaces evasive or low-overlap answers with a warning; does not verify every claim | ⚠️ |
+| 📊 LLM-as-judge eval | Per-query faithfulness + relevance scoring; agreement with human labels is measured in [Benchmark Results](#-benchmark-results) | ⚠️ |
 | 💬 Session memory | Windowed conversation buffer (k=2) | ✅ |
 | 🗂️ Multi-doc comparison | Compare N documents on any question | ✅ |
 | 💾 Persistent history | SQLite-backed session storage | ✅ |
@@ -253,7 +253,7 @@ sqlite3 (stdlib)
 
 **Windowed memory (k=2)** → Prevents context overflow in Groq's 8K token limit while keeping conversational continuity.
 
-**LLM-as-judge** → Automated eval without labeled datasets. Scales to any domain.
+**LLM-as-judge** → Automated eval without labeled datasets. In a check against human labels it did not separate faithful from unfaithful answers (see [Benchmark Results](#-benchmark-results)), so treat its scores as indicative only.
 
 ---
 

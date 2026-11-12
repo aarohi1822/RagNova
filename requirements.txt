@@ -1,3 +1,5 @@
+# Streamlit app (frontend/streamlit_app.py). Every direct dependency is pinned.
+# Resolved and checked together with `pip check` on Python 3.12.
 streamlit==1.45.1
 langchain==0.2.16
 langchain-core==0.2.38
@@ -5,7 +7,7 @@ langchain-community==0.2.16
 langchain-openai==0.1.23
 langchain-groq==0.1.9
 langchain-text-splitters==0.2.4
-groq>=0.11.0
+groq==0.37.1
 faiss-cpu==1.8.0.post1
 pypdf==4.3.1
 docx2txt==0.8
@@ -14,7 +16,6 @@ python-dotenv==1.0.1
 transformers==4.44.2
 torch==2.3.1
 pdfminer.six==20221105
-rank-bm25
-sentence-transformers
-numpy
-pandas
+rank-bm25==0.2.2
+numpy==1.26.4
+pandas==2.3.3

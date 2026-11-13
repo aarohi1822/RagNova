@@ -117,12 +117,12 @@ Retrieval on a 60-query benchmark (71 gold passages, 1425 passages from 16 publi
 
 | Configuration | Recall@5 [95% CI] | MRR@10 [95% CI] | p50 latency | p95 latency |
 |---|---|---|---|---|
-| BM25 only | 0.592 [0.47–0.71] | 0.495 [0.38–0.61] | 1.6 ms | 2.8 ms |
-| FAISS only | 0.767 [0.66–0.87] | 0.613 [0.51–0.71] | 7.9 ms | 9.0 ms |
-| Hybrid (RRF) | 0.758 [0.65–0.86] | 0.626 [0.52–0.73] | 10.8 ms | 13.8 ms |
-| Hybrid + cross-encoder | 0.833 [0.73–0.92] | 0.732 [0.63–0.83] | 162.6 ms | 222.0 ms |
-| Concat merge (previous app) | 0.767 [0.66–0.87] | 0.613 [0.51–0.71] | 10.7 ms | 11.8 ms |
-| App pipeline (frontend code) | 0.833 [0.73–0.92] | 0.732 [0.63–0.83] | 153.1 ms | 215.6 ms |
+| BM25 only | 0.592 [0.47–0.71] | 0.495 [0.38–0.61] | 1.6 ms | 2.1 ms |
+| FAISS only | 0.767 [0.66–0.87] | 0.613 [0.51–0.71] | 9.7 ms | 18.3 ms |
+| Hybrid (RRF) | 0.758 [0.65–0.86] | 0.626 [0.52–0.73] | 10.0 ms | 12.1 ms |
+| Hybrid + cross-encoder | 0.833 [0.73–0.92] | 0.732 [0.63–0.83] | 157.8 ms | 244.6 ms |
+| Concat merge (previous app) | 0.767 [0.66–0.87] | 0.613 [0.51–0.71] | 11.0 ms | 13.1 ms |
+| App pipeline (frontend code) | 0.833 [0.73–0.92] | 0.732 [0.63–0.83] | 163.8 ms | 220.0 ms |
 
 | LLM-judge reliability | n | Agreement | Cohen's κ [95% CI] | Judge yes-rate |
 |---|---|---|---|---|

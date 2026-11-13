@@ -1,0 +1,26 @@
+name: docker
+
+# Builds the app image and checks that the container starts and serves.
+# Runs only when files that go into the image change, or on demand.
+on:
+  push:
+    branches: ["main"]
+    paths: ["Dockerfile", "docker-compose.yml", "requirements.txt", "frontend/**", ".streamlit/config.toml"]
+  workflow_dispatch:
+
+jobs:
+  build-and-smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t ragnova:ci .
+      - name: Start container and wait for health check
+        run: |
+          docker run -d --name ragnova -p 8501:8501 -e GROQ_API_KEY=placeholder-not-real ragnova:ci
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:8501/_stcore/health; then echo; echo "healthy"; exit 0; fi
+            sleep 2
+          done
+          docker logs ragnova
+          exit 1

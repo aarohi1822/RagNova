@@ -15,3 +15,6 @@ data/processed/*
 # eval scratch
 eval/judge/.partial.jsonl
 eval/judge/export.log
+
+# local Streamlit secrets (set GROQ_API_KEY here or in the environment; never commit)
+.streamlit/secrets.toml

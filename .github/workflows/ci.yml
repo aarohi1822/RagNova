@@ -13,15 +13,14 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
       - name: Install
+        # The tests and linter need no ML libraries: retrieval logic, metrics and the
+        # report generator are pure Python.
         run: |
           python -m pip install --upgrade pip
-          # pyproject.toml is kept as pyproject.local.toml so Streamlit Cloud ignores it
-          cp pyproject.local.toml pyproject.toml
-          python -m pip install -e ".[dev]"
+          python -m pip install pytest==8.3.3 ruff==0.17.4
       - name: Lint
-        run: ruff check backend frontend tests scripts eval
+        run: ruff check frontend tests eval
       - name: Test
         run: pytest -q
-

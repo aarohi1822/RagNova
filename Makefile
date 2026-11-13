@@ -1,15 +1,14 @@
 install:
-	python -m pip install -e ".[dev]"
+	python -m pip install -r requirements.txt
 
-run-api:
-	uvicorn app.main:app --app-dir backend --reload --host 0.0.0.0 --port 8000
+install-eval:
+	python -m pip install -r requirements-eval.txt
 
-run-ui:
+run:
 	streamlit run frontend/streamlit_app.py --server.port 8501
 
 test:
 	pytest -q
 
 lint:
-	ruff check backend frontend tests scripts
-
+	ruff check frontend tests eval

@@ -1,0 +1,5 @@
+line-length = 100
+
+[lint]
+# Pin the classic default rules; newer ruff releases enable many more by default.
+select = ["E4", "E7", "E9", "F"]

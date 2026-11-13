@@ -4,7 +4,7 @@
 
 **Question answering over your own documents, with hybrid retrieval, cross-encoder reranking, citations and a measured evaluation.**
 
-[![Python](https://img.shields.io/badge/Python-3.11%20|%203.12-3776AB?logo=python&logoColor=white)](https://python.org)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://python.org)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.45-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
 [![CI](https://github.com/aarohi1822/RagNova/actions/workflows/ci.yml/badge.svg)](https://github.com/aarohi1822/RagNova/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
@@ -29,46 +29,52 @@ Many RAG demos stop at (1) and (2) and never test (4).
 ## Approach
 
 ```
-                              User question
-                                    │
-                         ┌──────────▼──────────┐
-                         │   Query rewriter    │  ← LLM rewrites the question for retrieval
-                         └──────────┬──────────┘
-               ┌────────────────────┴────────────────────┐
-               │ evidence path                           │ answer path
-  ┌────────────▼─────────────┐              ┌────────────▼─────────────┐
-  │  FAISS + BM25 candidates │              │  FAISS top-3 retrieval   │
-  │            │             │              │  (LangChain conversation │
-  │  Cross-encoder rerank    │              │   chain, 2-turn memory)  │
-  │            │             │              └────────────┬─────────────┘
-  │  Top-3 passages          │              ┌────────────▼─────────────┐
-  └────────────┬─────────────┘              │  Llama 3.1 8B via Groq   │
-               │                            └────────────┬─────────────┘
-               │                                         │ answer
-               └────────────────────┬────────────────────┘
-                         ┌──────────▼──────────┐
-                         │   Grounding check   │  ← word overlap: answer vs top-3 passages
-                         └──────────┬──────────┘
-                         ┌──────────▼──────────┐
-                         │    LLM-as-judge     │  ← faithfulness + relevance scores
-                         └──────────┬──────────┘
-                                    ▼
-           Answer + citations (top-3 passages) + confidence + scores
+                           User question
+                                 │
+                      ┌──────────▼──────────┐
+                      │   Query rewriter    │  ← LLM rewrites the question for retrieval
+                      └──────────┬──────────┘
+                ┌────────────────┴────────────────┐
+        ┌───────▼────────┐               ┌────────▼───────┐
+        │ FAISS top-20   │               │  BM25 top-20   │
+        └───────┬────────┘               └────────┬───────┘
+                └────────────────┬────────────────┘
+                      ┌──────────▼──────────┐
+                      │ Reciprocal Rank     │  ← RRF (k = 60) → top-20 candidates
+                      │ Fusion              │
+                      └──────────┬──────────┘
+                      ┌──────────▼──────────┐
+                      │ Cross-encoder rerank│  ← keeps the top-3 passages
+                      └──────────┬──────────┘
+                      ┌──────────▼──────────┐
+                      │ Llama 3.1 8B (Groq) │  ← answers from those 3 passages + 2-turn memory
+                      └──────────┬──────────┘
+                      ┌──────────▼──────────┐
+                      │   Grounding check   │  ← word overlap: answer vs the same 3 passages
+                      └──────────┬──────────┘
+                      ┌──────────▼──────────┐
+                      │    LLM-as-judge     │  ← faithfulness + relevance (unvalidated)
+                      └──────────┬──────────┘
+                                 ▼
+          Answer + citations (the same 3 passages) + confidence + scores
 ```
 
 | Stage | Implementation |
 |---|---|
 | Ingestion | PDF, DOCX and TXT via LangChain loaders; 400-character chunks with 50-character overlap |
-| Retrieval | FAISS (`all-MiniLM-L6-v2` embeddings) plus BM25 keyword search |
-| Reranking | `cross-encoder/ms-marco-MiniLM-L-6-v2` picks the top-3 passages used for citations, grounding and judging |
-| Generation | `llama-3.1-8b-instant` on Groq, via a LangChain conversation chain that does its own FAISS top-3 search, with a two-turn memory window |
+| Retrieval | FAISS (`all-MiniLM-L6-v2` embeddings) and BM25, top 20 each, fused with Reciprocal Rank Fusion |
+| Reranking | `cross-encoder/ms-marco-MiniLM-L-6-v2` picks the top-3 passages; the same 3 feed the answer, citations, grounding check and judge |
+| Generation | `llama-3.1-8b-instant` on Groq, prompted with the 3 reranked passages and a two-turn memory window |
 | Grounding check | Word-overlap heuristic; replaces evasive or low-overlap answers with a warning |
-| Evaluation | Per-answer faithfulness and relevance scored by an LLM judge; SQLite history; CSV export |
+| Evaluation | Per-answer faithfulness and relevance from an LLM judge, labeled "unvalidated" in the UI; SQLite history; CSV export |
 | Extras | Query rewriting, multi-document comparison, downloadable answers |
 
-The app is a single Streamlit file, [`frontend/streamlit_app.py`](frontend/streamlit_app.py).
-[`backend/`](backend/) holds an earlier FastAPI/Chroma version of the pipeline that the demo
-does not use.
+The app is [`frontend/streamlit_app.py`](frontend/streamlit_app.py). Its retrieval logic
+(fusion, reranking order, answer prompt) lives in
+[`frontend/ragnova_retrieval.py`](frontend/ragnova_retrieval.py), which the offline evaluation
+calls too, so the benchmarked configuration is the code the app runs. An earlier, unused
+FastAPI/Chroma backend is preserved on the
+[`archive/backend`](https://github.com/aarohi1822/RagNova/tree/archive/backend) branch.
 
 ## Why each design decision?
 
@@ -78,8 +84,8 @@ An in-memory index is enough for the handful of documents a user uploads in one 
 **BM25 alongside semantic search** → Embeddings can miss exact terms such as names, section
 numbers and acronyms; BM25 matches them directly. The benchmark reports Recall@5 separately for
 keyword-style and paraphrased questions ([`eval/results/ablation.md`](eval/results/ablation.md)).
-Getting the benefit requires a real fusion step such as Reciprocal Rank Fusion (see
-[Limitations](#limitations)).
+The two rankings are combined with Reciprocal Rank Fusion, which rewards passages that both
+retrievers rank highly.
 
 **Cross-encoder reranking** → Bi-encoder retrieval is fast but coarse. A cross-encoder reads the
 question and each candidate together and scores them much more precisely. In the benchmark it
@@ -92,7 +98,7 @@ keeps each Groq call cheap and fast.
 
 **LLM-as-judge** → Gives every answer a faithfulness and relevance score without labeled data.
 Checked against human labels it did not separate faithful from unfaithful answers (see
-[Results](#results)), so its scores are a signal to validate, not a guarantee.
+[Results](#results)), so the app labels its scores "unvalidated".
 
 **Offline, seeded benchmark** → Fixed corpus, gold passages and random seeds, so every number in
 this README can be regenerated with one command and checked.
@@ -107,15 +113,16 @@ The table below is generated from [`results/metrics.json`](results/metrics.json)
 <!-- results:start -->
 <!-- generated by eval/report.py from results/metrics.json; do not edit by hand -->
 
-Retrieval on a 60-query benchmark (71 gold passages, 1425 passages from 16 public documents). Latency is retrieval only (no LLM), cpu, Darwin arm64, Python 3.12.4, seed 0, measured 2026-11-11.
+Retrieval on a 60-query benchmark (71 gold passages, 1425 passages from 16 public documents). Latency is retrieval only (no LLM), cpu, Darwin arm64, Python 3.12.4, seed 0, measured 2026-11-13.
 
 | Configuration | Recall@5 [95% CI] | MRR@10 [95% CI] | p50 latency | p95 latency |
 |---|---|---|---|---|
-| BM25 only | 0.592 [0.47–0.71] | 0.495 [0.38–0.61] | 1.3 ms | 1.8 ms |
-| FAISS only | 0.767 [0.66–0.87] | 0.613 [0.51–0.71] | 6.8 ms | 7.3 ms |
-| Hybrid (RRF) | 0.758 [0.65–0.86] | 0.626 [0.52–0.73] | 9.0 ms | 9.4 ms |
-| Hybrid + cross-encoder | 0.833 [0.73–0.92] | 0.732 [0.63–0.83] | 130.7 ms | 145.7 ms |
-| App hybrid (concat, ref.) | 0.767 [0.66–0.87] | 0.613 [0.51–0.71] | 8.8 ms | 9.4 ms |
+| BM25 only | 0.592 [0.47–0.71] | 0.495 [0.38–0.61] | 1.6 ms | 2.8 ms |
+| FAISS only | 0.767 [0.66–0.87] | 0.613 [0.51–0.71] | 7.9 ms | 9.0 ms |
+| Hybrid (RRF) | 0.758 [0.65–0.86] | 0.626 [0.52–0.73] | 10.8 ms | 13.8 ms |
+| Hybrid + cross-encoder | 0.833 [0.73–0.92] | 0.732 [0.63–0.83] | 162.6 ms | 222.0 ms |
+| Concat merge (previous app) | 0.767 [0.66–0.87] | 0.613 [0.51–0.71] | 10.7 ms | 11.8 ms |
+| App pipeline (frontend code) | 0.833 [0.73–0.92] | 0.732 [0.63–0.83] | 153.1 ms | 215.6 ms |
 
 | LLM-judge reliability | n | Agreement | Cohen's κ [95% CI] | Judge yes-rate |
 |---|---|---|---|---|
@@ -130,14 +137,23 @@ Judge: `local:Qwen/Qwen2.5-1.5B-Instruct`, threshold 0.5, 30 answers; 4 marked u
 Method, caveats and how to reproduce: [eval/README.md](eval/README.md).
 <!-- results:end -->
 
+![Recall@5 and MRR@10 with 95% confidence intervals for BM25, FAISS, hybrid RRF and hybrid plus cross-encoder](assets/retrieval_ablation.png)
+
+![Confusion matrix of human labels versus LLM-judge verdicts](assets/judge_confusion.png)
+
+Both figures are drawn from `results/metrics.json` by [`eval/plots.py`](eval/plots.py).
+
 **What the numbers say:**
 
 - **Reranking is the only clear improvement.** The cross-encoder gives the best Recall@5 and MRR,
   at the cost of the highest latency. With 60 queries the confidence intervals overlap, so treat
   the other differences as indicative.
-- **The app's current hybrid merge adds nothing.** It lists semantic hits first, so BM25 results
-  never reach the top 5 and it scores exactly like FAISS alone. Reciprocal Rank Fusion (the
-  "Hybrid (RRF)" row) is the proper way to combine the two.
+- **The app runs exactly the evaluated configuration.** The "App pipeline (frontend code)" row
+  runs the app's own retrieval code and returns the same top-10 passages as "Hybrid +
+  cross-encoder" for every benchmark query.
+- **The app's previous merge added nothing.** It listed semantic hits first, so BM25 results never
+  reached the top 5 and it scored exactly like FAISS alone ("Concat merge (previous app)"). The
+  app now uses Reciprocal Rank Fusion followed by reranking.
 - **The LLM judge does not detect unfaithful answers.** It rated every answer as faithful, so its
   agreement with human labels is no better than chance (see Cohen's κ above). The in-app faithfulness scores
   should not be read as a quality guarantee.
@@ -146,7 +162,7 @@ Method, labeling guidelines and caveats: [`eval/README.md`](eval/README.md).
 
 ## How to run
 
-**The app** (Python 3.11 or 3.12):
+**The app** (Python 3.12):
 
 ```bash
 git clone https://github.com/aarohi1822/RagNova.git
@@ -161,16 +177,18 @@ streamlit run frontend/streamlit_app.py
 Open http://localhost:8501, upload documents in the sidebar, click **Ingest Documents**, then ask
 questions. On Streamlit Community Cloud, set `GROQ_API_KEY` under the app's **Settings → Secrets**.
 
-**The evaluation** (separate environment, no API key needed):
+**With Docker:** `cp .env.example .env`, add your key, then `docker compose up --build`.
+
+**The evaluation** (no API key needed; installs the app's pinned stack plus the eval tools):
 
 ```bash
-python -m venv .venv-eval && source .venv-eval/bin/activate
 pip install -r requirements-eval.txt
 
 python eval/ablation.py              # retrieval comparison  -> eval/results/ablation.md
 python eval/judge_export.py          # 30 answers to label   -> eval/judge/labeling_sheet.csv
 python eval/judge_agreement.py       # labels vs LLM judge   -> eval/results/judge_agreement.md
 python eval/report.py                # -> results/metrics.json and the table above
+python eval/plots.py                 # -> assets/*.png from results/metrics.json
 ```
 
 All randomness is seeded (`--seed`, default 0). Retrieval quality numbers reproduce exactly;
@@ -180,37 +198,33 @@ latency varies slightly between runs and machines.
 
 ## Limitations
 
-- **Answers and citations come from different retrieval paths.** The answer is generated from a
-  plain FAISS top-3 search inside the LangChain chain; the hybrid + reranked passages are only
-  used for the citations, grounding check and judge. The reranker therefore does not influence the
-  answer, and the cited passages may differ from the ones the model read. (The offline judge
-  check generated answers from the reranked passages, i.e. the intended design.)
 - **Small, single-domain benchmark.** 60 queries over 16 legal and regulatory articles. The
   queries and gold labels were written by one annotator, so results may not transfer to other
   domains or document types.
 - **Judge reliability is measured on a proxy judge.** No API key was available offline, so the
   reliability check used a local `Qwen2.5-1.5B-Instruct`, not the app's Groq judge. Only 30
   answers were labeled, and the human–Claude inter-annotator agreement was only fair. Run `eval/judge_export.py` with `GROQ_API_KEY` set to test the production judge.
-- **Hybrid retrieval as shipped is FAISS-only in practice** (see Results). Switching the app to RRF
-  is a one-function change that has not been made yet.
+- **Follow-up questions are retrieved without conversation context.** The two-turn memory goes
+  into the answer prompt, but retrieval uses only the current (rewritten) question.
 - **The grounding check is a heuristic.** It counts overlapping words; it does not verify claims.
 - **Latency figures cover retrieval only,** with warm indexes on one laptop CPU. End-to-end
   latency in the app also includes query rewriting, generation and judging (three LLM calls), and
   BM25 is rebuilt on every query.
 - **In-session index.** Uploaded documents live in memory for the session; there is no persistent
   vector store in the demo.
-- **Docker files are out of date.** The `Dockerfile` expects a `pyproject.toml` that is kept as
-  `pyproject.local.toml` (renamed for Streamlit Cloud), so `docker-compose up` currently fails.
+- **The Docker image is checked only in CI.** [`.github/workflows/docker.yml`](.github/workflows/docker.yml)
+  builds it and waits for the health check; it was not built on the development machine.
 
 ## Project layout
 
 ```
 frontend/streamlit_app.py   the app
-eval/                       benchmark, ablation, judge-reliability scripts and data
+frontend/ragnova_retrieval.py  retrieval logic shared by the app and the evaluation
+eval/                       benchmark, ablation, judge-reliability and plotting scripts and data
 results/metrics.json        all reported numbers
-backend/                    earlier FastAPI/Chroma implementation (not used by the demo)
+assets/                     figures generated from results/metrics.json
 tests/                      unit tests, run in CI
-docs/                       architecture and deployment notes
+docs/                       portfolio and screenshot notes
 ```
 
 ## Author

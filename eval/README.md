@@ -14,6 +14,7 @@ eval/
   judge_agreement.py       your labels vs the LLM judge -> results/judge_agreement.{md,json}
   report.py                collects everything -> ../results/metrics.json + README results table
   seeds.py                 fixes python/numpy/torch/transformers seeds (default 0, --seed to change)
+  plots.py                 results/metrics.json -> ../assets/*.png
 ```
 
 All randomness is seeded (default `--seed 0`): bootstrap resampling, torch/transformers, numpy.
@@ -24,7 +25,9 @@ After running the experiments, run `python eval/report.py`. It writes `results/m
 regenerates the results table in the top-level README from that file. Don't edit that table by
 hand; a test checks that it matches `metrics.json`.
 
-Setup: `python -m venv .venv && .venv/bin/pip install -r requirements-eval.txt`
+Setup (Python 3.12): `python -m venv .venv && .venv/bin/pip install -r requirements-eval.txt`.
+This installs the app's pinned `requirements.txt` plus the evaluation tools, so the evaluation
+runs on the same library versions as the app.
 
 ## 1. Benchmark
 
@@ -51,8 +54,10 @@ Setup: `python -m venv .venv && .venv/bin/pip install -r requirements-eval.txt`
 python eval/ablation.py            # CPU; --device mps to use Apple GPU
 ```
 
-Configurations: BM25 only, FAISS only, Hybrid (RRF), Hybrid + cross-encoder rerank, plus the app's
-current concat-merge for reference. The script reports Recall@5, Hit@5 and MRR@10 with bootstrap
+Configurations: BM25 only, FAISS only, Hybrid (RRF), Hybrid + cross-encoder rerank, plus two
+reference rows. "Concat merge (previous app)" is the merge the app used before RRF. "App pipeline
+(frontend code)" builds the vector store exactly as the app does and calls the app's own
+retrieval module (`frontend/ragnova_retrieval.py`); it must match "Hybrid + cross-encoder". The script reports Recall@5, Hit@5 and MRR@10 with bootstrap
 95% CIs, and p50/p95 retrieval latency. Results go to `results/ablation.md`.
 
 ## 3. Judge reliability

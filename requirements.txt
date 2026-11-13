@@ -19,3 +19,6 @@ pdfminer.six==20221105
 rank-bm25==0.2.2
 numpy==1.26.4
 pandas==2.3.3
+# Transitive (streamlit). Unpinned, pip picks pyarrow 26.x, which requires NumPy 2, while
+# langchain 0.2 needs NumPy<2 -> st.dataframe in the Evaluation tab crashes. 17.0.0 works.
+pyarrow==17.0.0

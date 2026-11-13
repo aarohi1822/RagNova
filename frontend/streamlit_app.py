@@ -1,19 +1,32 @@
 import os
+import sys
 import time
 import json
 import sqlite3
 import tempfile
 import datetime
-import numpy as np
+from pathlib import Path
+
 import streamlit as st
 
 from langchain_community.document_loaders import Docx2txtLoader, TextLoader, PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferWindowMemory
 from langchain_groq import ChatGroq
+
+# Retrieval logic shared with the offline evaluation (eval/), so the app runs the
+# exact configuration that was benchmarked.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ragnova_retrieval import (  # noqa: E402
+    ANSWER_TOP_K,
+    CANDIDATE_POOL,
+    build_answer_prompt,
+    rerank as rerank_scored,
+    retrieve,
+    tokenize,
+)
 
 # Optional: BM25 for hybrid retrieval
 try:
@@ -33,6 +46,11 @@ except ImportError:
 st.set_page_config(page_title="RAGNova", layout="wide", page_icon="🔍")
 st.title("🔍 RAGNova")
 st.caption("AI Document Intelligence Platform — Hybrid Retrieval · Reranking · Citations · Evaluation")
+
+JUDGE_NOTE = (
+    "LLM-judge scores are unvalidated: in an offline check against human labels the judge "
+    "rated every answer as faithful, so these scores do not detect unsupported answers."
+)
 
 # ── API Key Setup ───────────────────────────────────────────
 try:
@@ -159,46 +177,28 @@ def load_file(uploaded_file):
 def build_vectorstore(docs):
     splitter = RecursiveCharacterTextSplitter(chunk_size=400, chunk_overlap=50)
     chunks = splitter.split_documents(docs)
+    for idx, chunk in enumerate(chunks):
+        chunk.metadata["chunk_idx"] = idx  # lets FAISS hits map back to chunk positions
     st.session_state.all_chunks = chunks
     return FAISS.from_documents(chunks, get_embeddings())
 
 # ── Hybrid Retrieval ────────────────────────────────────────
-def hybrid_retrieve(query: str, k: int = 4):
-    vectorstore = st.session_state.vectorstore
+def hybrid_retrieve(query: str, pool: int = CANDIDATE_POOL):
+    """FAISS + BM25 top-`pool` hits fused with Reciprocal Rank Fusion (ragnova_retrieval)."""
     chunks = st.session_state.all_chunks
-
-    semantic_docs = vectorstore.similarity_search(query, k=k)
-
-    if not BM25_AVAILABLE or not chunks:
-        return semantic_docs
-
-    tokenized = [c.page_content.lower().split() for c in chunks]
-    bm25 = BM25Okapi(tokenized)
-    scores = bm25.get_scores(query.lower().split())
-    top_idx = np.argsort(scores)[::-1][:k]
-    bm25_docs = [chunks[i] for i in top_idx]
-
-    seen = set()
-    merged = []
-    for doc in semantic_docs + bm25_docs:
-        key = doc.page_content[:80]
-        if key not in seen:
-            seen.add(key)
-            merged.append(doc)
-
-    return merged[:k + 2]
+    bm25 = BM25Okapi([tokenize(c.page_content) for c in chunks]) if BM25_AVAILABLE and chunks else None
+    return [chunks[i] for i in retrieve(query, st.session_state.vectorstore, bm25, pool)]
 
 # ── Reranker ────────────────────────────────────────────────
-def rerank(query: str, docs, top_k: int = 3):
+def rerank(query: str, docs, top_k: int = ANSWER_TOP_K):
     reranker = get_reranker()
     if reranker is None or not docs:
         return docs[:top_k], [1.0] * min(top_k, len(docs))
 
-    pairs = [(query, doc.page_content) for doc in docs]
-    scores = reranker.predict(pairs).tolist()
-    ranked = sorted(zip(scores, docs), key=lambda x: x[0], reverse=True)
-    top_docs = [d for _, d in ranked[:top_k]]
-    top_scores = [s for s, _ in ranked[:top_k]]
+    scores = reranker.predict([(query, doc.page_content) for doc in docs]).tolist()
+    ranked = rerank_scored(docs, scores, top_k)
+    top_docs = [d for d, _ in ranked]
+    top_scores = [s for _, s in ranked]
 
     max_s, min_s = max(top_scores), min(top_scores)
     if max_s != min_s:
@@ -307,7 +307,8 @@ def build_download_text(question, answer, citations, faithfulness, relevance, la
         "RAGNova — Answer Export",
         "=" * 40,
         f"Question: {question}",
-        f"Latency: {latency_ms}ms | Faithfulness: {faithfulness} | Relevance: {relevance}",
+        f"Latency: {latency_ms}ms | Faithfulness: {faithfulness} | Relevance: {relevance} "
+        "(LLM-judge scores, unvalidated)",
         "",
         "Answer:",
         answer,
@@ -320,15 +321,17 @@ def build_download_text(question, answer, citations, faithfulness, relevance, la
         lines.append("")
     return "\n".join(lines)
 
-# ── QA Chain ────────────────────────────────────────────────
-def get_chain(retriever):
-    return ConversationalRetrievalChain.from_llm(
-        llm=get_llm(),
-        retriever=retriever,
-        memory=st.session_state.memory,
-        return_source_documents=True,
-        output_key="answer",
+# ── Answer Generation ───────────────────────────────────────
+def generate_answer(question: str, docs) -> str:
+    """Answer from exactly the passages that are cited, grounded and judged."""
+    history = st.session_state.memory.load_memory_variables({})["chat_history"]
+    history_text = "\n".join(
+        f"{'User' if m.type == 'human' else 'Assistant'}: {m.content}" for m in history
     )
+    prompt = build_answer_prompt(question, [d.page_content for d in docs], history_text)
+    answer = get_llm().invoke(prompt).content.strip()
+    st.session_state.memory.save_context({"question": question}, {"answer": answer})
+    return answer
 
 # ════════════════════════════════════════════════════════════
 # SIDEBAR
@@ -380,7 +383,7 @@ with st.sidebar:
     use_query_rewrite = st.toggle("Query Rewriting", value=True)
     use_hybrid = st.toggle("Hybrid Retrieval (BM25 + Semantic)", value=BM25_AVAILABLE)
     use_reranker = st.toggle("Cross-Encoder Reranking", value=RERANKER_AVAILABLE)
-    use_eval = st.toggle("LLM-as-Judge Evaluation", value=True)
+    use_eval = st.toggle("LLM-as-Judge Scores (unvalidated)", value=True, help=JUDGE_NOTE)
 
     st.divider()
     st.caption("Groq · HuggingFace · FAISS · BM25 · CrossEncoder")
@@ -409,31 +412,28 @@ with tab1:
 
                     # Step 2: Hybrid retrieval
                     if use_hybrid:
-                        candidate_docs = hybrid_retrieve(final_query, k=6)
+                        candidate_docs = hybrid_retrieve(final_query)
                     else:
                         candidate_docs = st.session_state.vectorstore.similarity_search(final_query, k=4)
 
                     # Step 3: Reranking
                     if use_reranker:
-                        ranked_docs, conf_scores = rerank(final_query, candidate_docs, top_k=3)
+                        ranked_docs, conf_scores = rerank(final_query, candidate_docs)
                     else:
-                        ranked_docs = candidate_docs[:3]
+                        ranked_docs = candidate_docs[:ANSWER_TOP_K]
                         conf_scores = [1.0] * len(ranked_docs)
 
-                    # Step 4: Generation
-                    retriever = st.session_state.vectorstore.as_retriever(search_kwargs={"k": 3})
-                    chain = get_chain(retriever)
+                    # Step 4: Generation from the reranked passages
                     start_time = time.time()
-                    result = chain.invoke({"question": final_query})
+                    answer = generate_answer(final_query, ranked_docs)
                     latency_ms = int((time.time() - start_time) * 1000)
-                    answer = result["answer"]
 
                     # Step 5: Grounding check
                     grounded = is_grounded(answer, ranked_docs)
                     if not grounded:
                         answer = "⚠️ I could not find a grounded answer in your documents for this question."
 
-                    # Step 6: Evaluation
+                    # Step 6: LLM-judge scores (unvalidated)
                     eval_scores = {"faithfulness": 0.0, "relevance": 0.0}
                     if use_eval and grounded:
                         with st.spinner("Evaluating answer quality..."):
@@ -475,8 +475,8 @@ with tab1:
         c1, c2, c3, c4 = st.columns(4)
         c1.metric("Latency (ms)", entry["latency_ms"])
         c2.metric("Citations", len(entry["citations"]))
-        c3.metric("Faithfulness", entry["faithfulness"])
-        c4.metric("Relevance", entry["relevance"])
+        c3.metric("Faithfulness (unvalidated)", entry["faithfulness"], help=JUDGE_NOTE)
+        c4.metric("Relevance (unvalidated)", entry["relevance"], help=JUDGE_NOTE)
 
         download_text = build_download_text(
             entry["question"], entry["answer"], entry["citations"],
@@ -531,6 +531,7 @@ with tab2:
 # ── TAB 3: Evaluation Dashboard ──────────────────────────────
 with tab3:
     st.subheader("📊 RAG Evaluation Dashboard")
+    st.warning(JUDGE_NOTE)
     rows = load_from_db(limit=50)
 
     if not rows:
@@ -542,20 +543,22 @@ with tab3:
             "Timestamp", "Question", "Answer", "Citations",
             "Latency (ms)", "Faithfulness", "Relevance"
         ])
+        df = df.rename(columns={"Faithfulness": "Faithfulness (unvalidated)",
+                                "Relevance": "Relevance (unvalidated)"})
 
         c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Avg Faithfulness", f"{df['Faithfulness'].mean():.2f}")
-        c2.metric("Avg Relevance", f"{df['Relevance'].mean():.2f}")
+        c1.metric("Avg Faithfulness (unvalidated)", f"{df['Faithfulness (unvalidated)'].mean():.2f}")
+        c2.metric("Avg Relevance (unvalidated)", f"{df['Relevance (unvalidated)'].mean():.2f}")
         c3.metric("Avg Latency (ms)", f"{df['Latency (ms)'].mean():.0f}")
         c4.metric("Total Queries", len(df))
 
         st.divider()
         st.dataframe(
-            df[["Timestamp", "Question", "Faithfulness", "Relevance", "Latency (ms)"]],
+            df[["Timestamp", "Question", "Faithfulness (unvalidated)", "Relevance (unvalidated)", "Latency (ms)"]],
             use_container_width=True,
         )
 
-        csv = df[["Timestamp", "Question", "Answer", "Faithfulness", "Relevance", "Latency (ms)"]].to_csv(index=False)
+        csv = df[["Timestamp", "Question", "Answer", "Faithfulness (unvalidated)", "Relevance (unvalidated)", "Latency (ms)"]].to_csv(index=False)
         st.download_button(
             "⬇️ Download Evaluation Report (CSV)",
             data=csv.encode("utf-8"),
@@ -575,4 +578,4 @@ with tab4:
             ts, q, ans, cits, lat, faith, rel = row
             with st.expander(f"[{ts[:16]}] {q[:80]}"):
                 st.markdown(f"**Answer:** {ans}")
-                st.caption(f"Latency: {lat}ms | Faithfulness: {faith} | Relevance: {rel}")
+                st.caption(f"Latency: {lat}ms | Faithfulness: {faith} | Relevance: {rel} (LLM-judge, unvalidated)")

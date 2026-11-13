@@ -28,9 +28,11 @@ from pathlib import Path
 
 EVAL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(EVAL_DIR))
+sys.path.insert(0, str(EVAL_DIR.parent / "frontend"))
 
 from llm import get_llm  # noqa: E402
 from seeds import DEFAULT_SEED, set_seeds  # noqa: E402
+from ragnova_retrieval import build_answer_prompt  # noqa: E402
 
 JUDGE_DIR = EVAL_DIR / "judge"
 SHEET_PATH = JUDGE_DIR / "labeling_sheet.csv"
@@ -38,13 +40,6 @@ JUDGE_PATH = JUDGE_DIR / "judge_outputs.jsonl"
 PARTIAL_PATH = JUDGE_DIR / ".partial.jsonl"  # resume checkpoint, deleted on success
 N_ITEMS = 30
 TOP_K = 3
-
-# LangChain's default "stuff" QA prompt, used by ConversationalRetrievalChain in the app.
-QA_PROMPT = (
-    "Use the following pieces of context to answer the question at the end. If you don't "
-    "know the answer, just say that you don't know, don't try to make up an answer.\n\n"
-    "{context}\n\nQuestion: {question}\nHelpful Answer:"
-)
 
 # Verbatim from evaluate_answer() in frontend/streamlit_app.py.
 JUDGE_PROMPT = """You are an evaluation judge. Score the following RAG answer.
@@ -100,7 +95,7 @@ def main() -> None:
 
     from retrievers import Retrievers  # heavy import, after the safety check
 
-    retr = Retrievers(passages, device="cpu")
+    retr = Retrievers(passages, device="cpu", app_pipeline=False)
     retrieved = {q["qid"]: retr.hybrid_rerank(q["query"], TOP_K) for q in items}
     del retr
     gc.collect()
@@ -116,7 +111,7 @@ def main() -> None:
         if q["qid"] in done and done[q["qid"]]["backend"] == llm.name:
             continue
         chunks = [text_of[i] for i in retrieved[q["qid"]]]
-        answer = llm.complete(QA_PROMPT.format(context="\n\n".join(chunks), question=q["query"]))
+        answer = llm.complete(build_answer_prompt(q["query"], chunks))  # same prompt as the app
         scores, raws = {}, {}
         for variant, judge_ctx in {
             "app_truncated": "\n".join(c[:300] for c in chunks),
